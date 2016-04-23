@@ -12,6 +12,9 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <listener>
+        <listener-class>fr.bbougon.iris.entrepot.mongo.ContextListener</listener-class>
+    </listener>
 
     <servlet-mapping>
         <servlet-name>jersey</servlet-name>

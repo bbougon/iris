@@ -34,10 +34,6 @@ public class AvecServeurEmbarqué extends ExternalResource {
         }
     }
 
-    public AvecServeurEmbarqué demarre() {
-        return this;
-    }
-
     public String getUrl() {
         return server.getURI().toString();
     }
