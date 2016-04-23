@@ -24,7 +24,7 @@ public class ContactRessourceIntegrationTest {
         UUID identifiant = UUID.randomUUID();
         Entity<String> entity = Entity.json("{nom:Bertrand}");
 
-        Response response = client.target(serveur.getUrl()).path("contact").path(identifiant.toString()).request().put(entity);
+        Response response = client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().put(entity);
 
         assertThat(response.getStatus()).isEqualTo(CREATED.getStatusCode());
     }
