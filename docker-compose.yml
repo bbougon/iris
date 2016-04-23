@@ -1,0 +1,5 @@
+version: '2'
+services:
+  maven:
+    image: maven
+    command: mvn clean install
