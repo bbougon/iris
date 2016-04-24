@@ -1,42 +1,30 @@
 package fr.bbougon.iris.rules;
 
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.webapp.WebAppContext;
+import fr.bbougon.iris.Serveur;
 import org.junit.rules.ExternalResource;
+
+import java.net.InetSocketAddress;
 
 public class AvecServeurEmbarqué extends ExternalResource {
 
     @Override
     public void before() {
-        server = new Server(8080);
-        WebAppContext context = new WebAppContext();
-        context.setDescriptor("src/main/webapp/WEB-INF/web.xml");
-        context.setResourceBase("src/main/webapp");
-        context.setContextPath("/");
-        server.setHandler(context);
-        start();
+        serveur = new Serveur(new InetSocketAddress(8080));
+        démarre();
     }
 
-    private void start() {
-        try {
-            server.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    private void démarre() {
+        serveur.démarre();
     }
 
     @Override
     public void after() {
-        try {
-            server.stop();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        serveur.stop();
     }
 
     public String getUrl() {
-        return server.getURI().toString();
+        return serveur.getUrl();
     }
 
-    private Server server;
+    private Serveur serveur;
 }

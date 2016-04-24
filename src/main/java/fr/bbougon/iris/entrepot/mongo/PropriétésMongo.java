@@ -1,4 +1,4 @@
-package fr.bbougon.iris;
+package fr.bbougon.iris.entrepot.mongo;
 
 import com.google.common.collect.Lists;
 import com.mongodb.ServerAddress;
@@ -8,7 +8,7 @@ import org.mongolink.UpdateStrategies;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class Propriétés {
+public class PropriétésMongo {
 
     public Settings ajouteLesPropriétés(Settings settings) {
         return settings
@@ -19,7 +19,7 @@ public class Propriétés {
     }
 
     String getNomBaseDeDonnees() {
-        return bundle.getString("database");
+        return bundle.getString("mongo.database");
     }
 
     ServerAddress getServerAddress() {
@@ -32,11 +32,11 @@ public class Propriétés {
     }
 
     private String getPort() {
-        return bundle.getString("port");
+        return bundle.getString("mongo.port");
     }
 
     private String getHost() {
-        return bundle.getString("host");
+        return bundle.getString("mongo.host");
     }
 
     UpdateStrategies getDefaultStrategy() {
@@ -44,11 +44,11 @@ public class Propriétés {
     }
 
     String getUser() {
-        return bundle.getString("user");
+        return bundle.getString("mongo.user");
     }
 
     String getPassword() {
-        return bundle.getString("password");
+        return bundle.getString("mongo.password");
     }
 
     private static final String CONFIGURATION = "configuration";

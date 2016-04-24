@@ -1,6 +1,5 @@
 package fr.bbougon.iris.entrepot.mongo;
 
-import fr.bbougon.iris.Propriétés;
 import org.mongolink.MongoSession;
 import org.mongolink.MongoSessionManager;
 import org.mongolink.Settings;
@@ -14,11 +13,16 @@ public class MongoConfiguration {
     }
 
     public static MongoSession startSession() {
-        ContextBuilder builder = new ContextBuilder("fr.bbougon.iris.entrepot.mongo.mapping");
-        sessionManager = MongoSessionManager.create(builder, new Propriétés().ajouteLesPropriétés(Settings.defaultInstance()));
-        session = sessionManager.createSession();
-        session.start();
-        return session;
+        try {
+            ContextBuilder builder = new ContextBuilder("fr.bbougon.iris.entrepot.mongo.mapping");
+            sessionManager = MongoSessionManager.create(builder, new PropriétésMongo().ajouteLesPropriétés(Settings.defaultInstance()));
+            session = sessionManager.createSession();
+            session.start();
+            return session;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     static MongoSessionManager sessionManager;

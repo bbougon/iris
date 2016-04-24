@@ -1,4 +1,4 @@
-package fr.bbougon.iris;
+package fr.bbougon.iris.entrepot.mongo;
 
 import org.junit.Test;
 import org.mongolink.Settings;
@@ -6,12 +6,12 @@ import org.mongolink.UpdateStrategies;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-public class PropriétésTest {
+public class PropriétésMongoTest {
 
     @Test
     public void onPeutAjouterDesProprietes() {
         Settings settings = Settings.defaultInstance();
-        Propriétés proprietes = new Propriétés();
+        PropriétésMongo proprietes = new PropriétésMongo();
 
         proprietes.ajouteLesPropriétés(settings);
 

@@ -10,8 +10,8 @@ public class MonApplication extends ResourceConfig {
 
     public MonApplication() {
         register(JacksonFeature.class);
-        packages("fr.bbougon.iris.web.ressources");
-        packages("org.glassfish.jersey.examples.jackson");
+        packages(true, "fr.bbougon.iris.web.ressources");
+        packages(true, "org.glassfish.jersey.examples.jackson");
     }
 
 }

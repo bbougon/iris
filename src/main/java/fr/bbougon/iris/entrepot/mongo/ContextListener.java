@@ -8,13 +8,16 @@ import javax.servlet.ServletContextListener;
 
 public class ContextListener implements ServletContextListener {
 
+    @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         MongoSession session = MongoConfiguration.startSession();
         Entrepots.initialise(new EntrepotsMongos(session));
+
     }
 
+    @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         MongoConfiguration.stopSession();
-    }
 
+    }
 }
