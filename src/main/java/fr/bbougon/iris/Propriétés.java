@@ -5,6 +5,7 @@ import com.mongodb.ServerAddress;
 import org.mongolink.Settings;
 import org.mongolink.UpdateStrategies;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Propriétés {
@@ -18,7 +19,7 @@ public class Propriétés {
     }
 
     String getNomBaseDeDonnees() {
-        return ResourceBundle.getBundle(CONFIGURATION).getString("database");
+        return ResourceBundle.getBundle(CONFIGURATION, Locale.FRANCE).getString("database");
     }
 
     ServerAddress getServerAddress() {
