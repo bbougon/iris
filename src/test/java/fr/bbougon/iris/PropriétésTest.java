@@ -15,7 +15,7 @@ public class PropriétésTest {
 
         proprietes.ajouteLesPropriétés(settings);
 
-        assertThat(proprietes.getNomBaseDeDonnees()).isEqualTo("basededonnees");
+        assertThat(proprietes.getNomBaseDeDonnees()).isEqualTo("iris");
         assertThat(proprietes.getServerAddress().getHost()).isEqualTo("127.0.0.1");
         assertThat(proprietes.getServerAddress().getPort()).isEqualTo(27017);
         assertThat(proprietes.getDefaultStrategy()).isEqualTo(UpdateStrategies.DIFF);
