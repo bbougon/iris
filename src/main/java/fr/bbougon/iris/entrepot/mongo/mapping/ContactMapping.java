@@ -8,5 +8,6 @@ public class ContactMapping extends AggregateMap<Contact> {
     @Override
     public void map() {
         id().onProperty(element().getIdentifiant()).natural();
+        property().onProperty(element().getNom());
     }
 }

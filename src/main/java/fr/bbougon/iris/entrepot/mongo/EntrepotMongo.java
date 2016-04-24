@@ -5,6 +5,7 @@ import org.mongolink.MongoSession;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.UUID;
 
 public class EntrepotMongo<T> implements Entrepot<T> {
 
@@ -18,7 +19,7 @@ public class EntrepotMongo<T> implements Entrepot<T> {
 
     @Override
     public T parId(String identifiant) {
-        return session.get(identifiant, persistentType());
+        return session.get(UUID.fromString(identifiant), persistentType());
     }
 
     public List<T> tous() {
