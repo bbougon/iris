@@ -1,0 +1,7 @@
+language: java
+jdk:
+  - oraclejdk8
+services:
+  - mongodb
+before_script:
+  - mongo iris --eval 'db.addUser("user", "password");'
