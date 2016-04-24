@@ -1,8 +1,8 @@
 package fr.bbougon.iris.entrepot.mongo;
 
+import fr.bbougon.iris.Configuration;
 import org.mongolink.MongoSession;
 import org.mongolink.MongoSessionManager;
-import org.mongolink.Settings;
 import org.mongolink.domain.mapper.ContextBuilder;
 
 public class MongoConfiguration {
@@ -15,7 +15,7 @@ public class MongoConfiguration {
     public static MongoSession startSession() {
         try {
             ContextBuilder builder = new ContextBuilder("fr.bbougon.iris.entrepot.mongo.mapping");
-            sessionManager = MongoSessionManager.create(builder, new PropriétésMongo().ajouteLesPropriétés(Settings.defaultInstance()));
+            sessionManager = MongoSessionManager.create(builder, Configuration.configurationMongo());
             session = sessionManager.createSession();
             session.start();
             return session;

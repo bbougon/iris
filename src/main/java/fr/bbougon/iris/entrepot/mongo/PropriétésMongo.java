@@ -5,10 +5,15 @@ import com.mongodb.ServerAddress;
 import org.mongolink.Settings;
 import org.mongolink.UpdateStrategies;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 public class PropriétésMongo {
+
+    public PropriétésMongo(String dataBase, String port, String host, String user, String password) {
+        this.dataBase = dataBase;
+        this.port = port;
+        this.host = host;
+        this.user = user;
+        this.password = password;
+    }
 
     public Settings ajouteLesPropriétés(Settings settings) {
         return settings
@@ -19,7 +24,7 @@ public class PropriétésMongo {
     }
 
     String getNomBaseDeDonnees() {
-        return bundle.getString("mongo.database");
+        return dataBase;
     }
 
     ServerAddress getServerAddress() {
@@ -32,11 +37,11 @@ public class PropriétésMongo {
     }
 
     private String getPort() {
-        return bundle.getString("mongo.port");
+        return port;
     }
 
     private String getHost() {
-        return bundle.getString("mongo.host");
+        return host;
     }
 
     UpdateStrategies getDefaultStrategy() {
@@ -44,13 +49,16 @@ public class PropriétésMongo {
     }
 
     String getUser() {
-        return bundle.getString("mongo.user");
+        return user;
     }
 
     String getPassword() {
-        return bundle.getString("mongo.password");
+        return password;
     }
 
-    private static final String CONFIGURATION = "configuration";
-    private static final ResourceBundle bundle = ResourceBundle.getBundle(CONFIGURATION, Locale.FRANCE);
+    private final String dataBase;
+    private final String port;
+    private final String host;
+    private final String user;
+    private final String password;
 }

@@ -5,12 +5,14 @@ import org.eclipse.jetty.webapp.WebAppContext;
 
 import java.net.InetSocketAddress;
 
+import static fr.bbougon.iris.Configuration.configurationServeur;
+
 public class Serveur {
 
     public Serveur(InetSocketAddress socketAddress) {
         serveur = new Server(socketAddress);
         WebAppContext context = new WebAppContext();
-        context.setDescriptor("src/main/webapp/WEB-INF/web.xml");
+        context.setDescriptor(configurationServeur().getDescriptor());
         context.setResourceBase(".");
         context.setContextPath("/");
         serveur.setHandler(context);

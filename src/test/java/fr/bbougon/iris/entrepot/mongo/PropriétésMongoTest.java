@@ -11,7 +11,7 @@ public class PropriétésMongoTest {
     @Test
     public void onPeutAjouterDesProprietes() {
         Settings settings = Settings.defaultInstance();
-        PropriétésMongo proprietes = new PropriétésMongo();
+        PropriétésMongo proprietes = new PropriétésMongo("iris", "27017", "127.0.0.1", "user", "password");
 
         proprietes.ajouteLesPropriétés(settings);
 

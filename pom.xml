@@ -154,11 +154,6 @@
                     <include>
                         jetty-logging.properties
                     </include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>${project.basedir}/src/main/webapp/WEB-INF</directory>
-                <includes>
                     <include>
                         log4j2.properties
                     </include>
