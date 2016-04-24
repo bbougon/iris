@@ -19,7 +19,7 @@ public class Propriétés {
     }
 
     String getNomBaseDeDonnees() {
-        return ResourceBundle.getBundle(CONFIGURATION, Locale.FRANCE).getString("database");
+        return bundle.getString("database");
     }
 
     ServerAddress getServerAddress() {
@@ -32,11 +32,11 @@ public class Propriétés {
     }
 
     private String getPort() {
-        return ResourceBundle.getBundle(CONFIGURATION).getString("port");
+        return bundle.getString("port");
     }
 
     private String getHost() {
-        return ResourceBundle.getBundle(CONFIGURATION).getString("host");
+        return bundle.getString("host");
     }
 
     UpdateStrategies getDefaultStrategy() {
@@ -44,12 +44,13 @@ public class Propriétés {
     }
 
     String getUser() {
-        return ResourceBundle.getBundle(CONFIGURATION).getString("user");
+        return bundle.getString("user");
     }
 
     String getPassword() {
-        return ResourceBundle.getBundle(CONFIGURATION).getString("password");
+        return bundle.getString("password");
     }
 
     private static final String CONFIGURATION = "configuration";
+    private static final ResourceBundle bundle = ResourceBundle.getBundle(CONFIGURATION, Locale.FRANCE);
 }
