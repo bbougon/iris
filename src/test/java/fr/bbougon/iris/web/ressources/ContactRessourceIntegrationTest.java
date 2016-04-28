@@ -1,5 +1,6 @@
 package fr.bbougon.iris.web.ressources;
 
+import com.google.gson.Gson;
 import fr.bbougon.iris.rules.AvecServeurEmbarqué;
 import org.junit.Before;
 import org.junit.Rule;
@@ -28,16 +29,22 @@ public class ContactRessourceIntegrationTest {
     @Test
     public void peutCréerUncontact() {
         UUID identifiant = UUID.randomUUID();
-        Entity<String> entity = Entity.json("{nom:Bertrand}");
+        Entity<String> entity = Entity.json(jsonEntity("Bertrand"));
 
         Response response = client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().put(entity);
 
         assertThat(response.getStatus()).isEqualTo(CREATED.getStatusCode());
     }
 
+    private String jsonEntity(String nom) {
+        JSONContact jsonContact = new JSONContact();
+        jsonContact.nom = nom;
+        return new Gson().toJson(jsonContact);
+    }
+
     @Test
     public void badRequestSurUnContactAvecUnMauvaisUUID() {
-        Response response = client.target(serveur.getUrl()).path(ContactRessource.PATH).path("mauvais-UUID").request().put(Entity.json("{nom:un-nom}"));
+        Response response = client.target(serveur.getUrl()).path(ContactRessource.PATH).path("mauvais-UUID").request().put(Entity.json(jsonEntity("un-nom")));
 
         assertThat(response.getStatus()).isEqualTo(BAD_REQUEST.getStatusCode());
         assertThat(response.readEntity(String.class)).isEqualTo("L'identifiant 'mauvais-UUID' doit être au format UUID.");

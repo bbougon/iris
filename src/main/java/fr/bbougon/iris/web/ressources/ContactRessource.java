@@ -1,6 +1,5 @@
 package fr.bbougon.iris.web.ressources;
 
-import com.google.gson.Gson;
 import fr.bbougon.iris.domaine.Contact;
 import fr.bbougon.iris.entrepot.Entrepots;
 
@@ -16,9 +15,9 @@ public class ContactRessource {
     @Path("/{identifiant}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    public Response créeUnContact(@PathParam("identifiant") String identifiant, String jsonContent) {
+    public Response créeUnContact(@PathParam("identifiant") String identifiant, JSONContact jsonContact) {
         try {
-            JSONContact jsonContact = new Gson().fromJson(jsonContent, JSONContact.class);
+            //JSONContact jsonContact = new Gson().fromJson(jsonContact, JSONContact.class);
             Contact contact = Contact.créer(identifiant, jsonContact);
             Entrepots.contact().persiste(contact);
             return Response.created(UriBuilder.fromResource(this.getClass()).path(identifiant).build()).entity("test").build();

@@ -20,17 +20,23 @@ public class ContactRessourceTest {
     public void onPeutCréerUnContactEnFournissantSonNomEtSonIdentifiant() {
         String identifiant = UUID.randomUUID().toString();
 
-        Response response = new ContactRessource().créeUnContact(identifiant, "{nom:Bertrand}");
+        Response response = new ContactRessource().créeUnContact(identifiant, jsonContact());
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
         assertThat(response.getHeaderString("Location")).isEqualTo(ContactRessource.PATH + "/" + identifiant);
+    }
+
+    private JSONContact jsonContact() {
+        JSONContact jsonContact = new JSONContact();
+        jsonContact.nom = "Bertrand";
+        return jsonContact;
     }
 
     @Test
     public void leContactEstCorrectementPersisté() {
         String identifiant = UUID.randomUUID().toString();
 
-        new ContactRessource().créeUnContact(identifiant, "{nom:Bertrand}");
+        new ContactRessource().créeUnContact(identifiant, jsonContact());
 
         Contact contact = Entrepots.contact().parId(identifiant);
         assertThat(contact.getIdentifiant().toString()).isEqualTo(identifiant);
