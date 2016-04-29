@@ -2,6 +2,7 @@ package fr.bbougon.iris.web.ressources;
 
 import fr.bbougon.iris.domaine.Contact;
 import fr.bbougon.iris.entrepot.Entrepots;
+import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.JSONContact;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

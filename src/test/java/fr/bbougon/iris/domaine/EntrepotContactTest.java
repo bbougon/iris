@@ -2,7 +2,7 @@ package fr.bbougon.iris.domaine;
 
 import fr.bbougon.iris.entrepot.Entrepots;
 import fr.bbougon.iris.rules.AvecEntrepotsMongo;
-import fr.bbougon.iris.web.ressources.JSONContact;
+import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.JSONContact;
 import org.junit.Rule;
 import org.junit.Test;
 

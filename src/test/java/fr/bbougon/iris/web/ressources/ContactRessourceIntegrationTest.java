@@ -1,6 +1,7 @@
 package fr.bbougon.iris.web.ressources;
 
 import com.google.gson.Gson;
+import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.JSONContact;
 import fr.bbougon.iris.rules.AvecServeurEmbarqué;
 import org.junit.Before;
 import org.junit.Rule;

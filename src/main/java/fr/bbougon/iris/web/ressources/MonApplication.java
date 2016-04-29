@@ -1,5 +1,7 @@
 package fr.bbougon.iris.web.ressources;
 
+import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.IrisExceptionMapper;
+import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.IrisMapperProvider;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 

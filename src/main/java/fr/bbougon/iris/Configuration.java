@@ -37,14 +37,21 @@ public class Configuration {
     }
 
     public static class ConfigurationServeur {
+
         public ConfigurationServeur(ResourceBundle configuration) {
             descriptor = configuration.getString("serveur.descriptor");
+            port = Integer.parseInt(configuration.getString("serveur.port"));
         }
 
         public String getDescriptor() {
             return descriptor;
         }
 
+        public int getPort() {
+            return port;
+        }
+
         private final String descriptor;
+        private int port = 8080;
     }
 }

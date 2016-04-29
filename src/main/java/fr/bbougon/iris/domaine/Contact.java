@@ -1,6 +1,6 @@
 package fr.bbougon.iris.domaine;
 
-import fr.bbougon.iris.web.ressources.JSONContact;
+import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.JSONContact;
 
 import java.util.UUID;
 

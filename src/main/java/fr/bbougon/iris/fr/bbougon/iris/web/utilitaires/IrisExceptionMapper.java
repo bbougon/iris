@@ -1,4 +1,4 @@
-package fr.bbougon.iris.web.ressources;
+package fr.bbougon.iris.fr.bbougon.iris.web.utilitaires;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

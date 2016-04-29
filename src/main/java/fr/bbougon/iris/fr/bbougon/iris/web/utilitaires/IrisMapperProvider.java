@@ -1,4 +1,4 @@
-package fr.bbougon.iris.web.ressources;
+package fr.bbougon.iris.fr.bbougon.iris.web.utilitaires;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

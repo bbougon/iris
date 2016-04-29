@@ -10,7 +10,8 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        LOGGER.error("passe?");
+        Configuration.configurationServeur().getPort();
+        LOGGER.info("Serveur en cours de démarrage sur le port ");
         new Serveur(new InetSocketAddress(8282)).démarre();
     }
 
