@@ -2,14 +2,14 @@ package fr.bbougon.iris.domaine;
 
 import java.util.UUID;
 
-public class ContactBuilderForTest {
+public class ContactTestBuilder {
 
-    public ContactBuilderForTest avecIdentifiant(UUID identifiant) {
+    public ContactTestBuilder avecIdentifiant(UUID identifiant) {
         this.identifiant = identifiant;
         return this;
     }
 
-    public ContactBuilderForTest avecUnNom(String nom) {
+    public ContactTestBuilder avecUnNom(String nom) {
         this.nom = nom;
         return this;
     }
@@ -18,12 +18,12 @@ public class ContactBuilderForTest {
         return Contact.créer(identifiant.toString(), nom, prénom, adresse);
     }
 
-    public ContactBuilderForTest avecUnPrénom(String prénom) {
+    public ContactTestBuilder avecUnPrénom(String prénom) {
         this.prénom = prénom;
         return this;
     }
 
-    public ContactBuilderForTest avecUneAdresse(Adresse adresse) {
+    public ContactTestBuilder avecUneAdresse(Adresse adresse) {
         this.adresse = adresse;
         return this;
     }
@@ -31,6 +31,6 @@ public class ContactBuilderForTest {
     private UUID identifiant;
     private String nom;
     private String prénom = "prénom";
-    private Adresse adresse = new AdresseBuilderForTest().build();
+    private Adresse adresse = new AdresseTestBuilder().build();
 
 }

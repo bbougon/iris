@@ -1,27 +1,27 @@
 package fr.bbougon.iris.domaine;
 
-public class AdresseBuilderForTest {
+public class AdresseTestBuilder {
 
     Adresse build() {
         return Adresse.créer(numéro, voie, codePostal, ville);
     }
 
-    public AdresseBuilderForTest withNuméro(String numéro) {
+    public AdresseTestBuilder withNuméro(String numéro) {
         this.numéro = numéro;
         return this;
     }
 
-    public AdresseBuilderForTest withVoie(String voie) {
+    public AdresseTestBuilder withVoie(String voie) {
         this.voie = voie;
         return this;
     }
 
-    public AdresseBuilderForTest withCodePostal(String codePostal) {
+    public AdresseTestBuilder withCodePostal(String codePostal) {
         this.codePostal = codePostal;
         return this;
     }
 
-    public AdresseBuilderForTest withVille(String ville) {
+    public AdresseTestBuilder withVille(String ville) {
         this.ville = ville;
         return this;
     }

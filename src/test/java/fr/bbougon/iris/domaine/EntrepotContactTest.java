@@ -18,13 +18,13 @@ public class EntrepotContactTest {
 
     @Before
     public void before() throws Exception {
-        adresse = new AdresseBuilderForTest()
+        adresse = new AdresseTestBuilder()
                 .withNuméro("10")
                 .withVoie("Avenue Magenta")
                 .withCodePostal("75010")
                 .withVille("Paris")
                 .build();
-        contact = new ContactBuilderForTest()
+        contact = new ContactTestBuilder()
                 .avecIdentifiant(UUID.randomUUID())
                 .avecUnNom("Un Nom")
                 .avecUnPrénom("Un prénom")
@@ -51,11 +51,11 @@ public class EntrepotContactTest {
 
     @Test
     public void onPeutRécupérerTousLesContacts() {
-        ContactBuilderForTest contactBuilderForTest = new ContactBuilderForTest();
-        Entrepots.contact().persiste(contactBuilderForTest.avecUnNom("Bertrand").avecIdentifiant(UUID.randomUUID()).build());
-        Entrepots.contact().persiste(contactBuilderForTest.avecUnNom("Aline").avecIdentifiant(UUID.randomUUID()).build());
-        Entrepots.contact().persiste(contactBuilderForTest.avecUnNom("Alessandra").avecIdentifiant(UUID.randomUUID()).build());
-        Entrepots.contact().persiste(contactBuilderForTest.avecUnNom("Rafael").avecIdentifiant(UUID.randomUUID()).build());
+        ContactTestBuilder contactTestBuilder = new ContactTestBuilder();
+        Entrepots.contact().persiste(contactTestBuilder.avecUnNom("Bertrand").avecIdentifiant(UUID.randomUUID()).build());
+        Entrepots.contact().persiste(contactTestBuilder.avecUnNom("Aline").avecIdentifiant(UUID.randomUUID()).build());
+        Entrepots.contact().persiste(contactTestBuilder.avecUnNom("Alessandra").avecIdentifiant(UUID.randomUUID()).build());
+        Entrepots.contact().persiste(contactTestBuilder.avecUnNom("Rafael").avecIdentifiant(UUID.randomUUID()).build());
         entrepots.cleanSession();
 
         List<Contact> contacts = Entrepots.contact().tous();
