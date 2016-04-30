@@ -9,5 +9,7 @@ public class ContactMapping extends AggregateMap<Contact> {
     public void map() {
         id().onProperty(element().getIdentifiant()).natural();
         property().onProperty(element().getNom());
+        property().onProperty(element().getPrénom());
+        property().onProperty(element().getAdresse());
     }
 }

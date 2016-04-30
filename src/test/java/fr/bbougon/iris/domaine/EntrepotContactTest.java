@@ -2,7 +2,7 @@ package fr.bbougon.iris.domaine;
 
 import fr.bbougon.iris.entrepot.Entrepots;
 import fr.bbougon.iris.rules.AvecEntrepotsMongo;
-import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.JSONContact;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -16,25 +16,46 @@ public class EntrepotContactTest {
     @Rule
     public AvecEntrepotsMongo entrepots = new AvecEntrepotsMongo();
 
-    @Test
-    public void onPeutPersister() {
-        UUID identifiant = UUID.randomUUID();
-        Contact contact = unContact(identifiant, "Un Nom");
-        Entrepots.contact().persiste(contact);
-        entrepots.cleanSession();
+    @Before
+    public void before() throws Exception {
+        adresse = new AdresseBuilderForTest()
+                .withNuméro("10")
+                .withVoie("Avenue Magenta")
+                .withCodePostal("75010")
+                .withVille("Paris")
+                .build();
+        contact = new ContactBuilderForTest()
+                .avecIdentifiant(UUID.randomUUID())
+                .avecUnNom("Un Nom")
+                .avecUnPrénom("Un prénom")
+                .avecUneAdresse(adresse)
+                .build();
 
-        Contact contactRécupéré = Entrepots.contact().parId(identifiant.toString());
-
-        assertThat(contactRécupéré).isNotNull();
-        assertThat(contactRécupéré.getNom()).isEqualTo("Un Nom");
     }
 
     @Test
-    public void onPeutRécupérerTousLesContacts(){
-        Entrepots.contact().persiste(unContact(UUID.randomUUID(), "Bertrand"));
-        Entrepots.contact().persiste(unContact(UUID.randomUUID(), "Aline"));
-        Entrepots.contact().persiste(unContact(UUID.randomUUID(), "Alessandra"));
-        Entrepots.contact().persiste(unContact(UUID.randomUUID(), "Rafael"));
+    public void onPeutPersister() {
+        Entrepots.contact().persiste(contact);
+        entrepots.cleanSession();
+
+        Contact contactRécupéré = Entrepots.contact().parId(contact.getIdentifiant().toString());
+
+        assertThat(contactRécupéré).isNotNull();
+        assertThat(contactRécupéré.getNom()).isEqualTo("Un Nom");
+        assertThat(contactRécupéré.getPrénom()).isEqualTo("Un prénom");
+        assertThat(contactRécupéré.getAdresse().getNuméro()).isEqualTo("10");
+        assertThat(contactRécupéré.getAdresse().getVoie()).isEqualTo("Avenue Magenta");
+        assertThat(contactRécupéré.getAdresse().getCodePostal()).isEqualTo("75010");
+        assertThat(contactRécupéré.getAdresse().getVille()).isEqualTo("Paris");
+    }
+
+    @Test
+    public void onPeutRécupérerTousLesContacts() {
+        ContactBuilderForTest contactBuilderForTest = new ContactBuilderForTest();
+        Entrepots.contact().persiste(contactBuilderForTest.avecUnNom("Bertrand").avecIdentifiant(UUID.randomUUID()).build());
+        Entrepots.contact().persiste(contactBuilderForTest.avecUnNom("Aline").avecIdentifiant(UUID.randomUUID()).build());
+        Entrepots.contact().persiste(contactBuilderForTest.avecUnNom("Alessandra").avecIdentifiant(UUID.randomUUID()).build());
+        Entrepots.contact().persiste(contactBuilderForTest.avecUnNom("Rafael").avecIdentifiant(UUID.randomUUID()).build());
         entrepots.cleanSession();
 
         List<Contact> contacts = Entrepots.contact().tous();
@@ -47,10 +68,6 @@ public class EntrepotContactTest {
         assertThat(contacts.get(3).getNom()).isEqualTo("Rafael");
     }
 
-    private Contact unContact(UUID identifiant, String nom) {
-        JSONContact jsonContact = new JSONContact();
-        jsonContact.nom = nom;
-        return Contact.créer(identifiant.toString(), jsonContact);
-    }
-
+    private Contact contact;
+    private Adresse adresse;
 }

@@ -2,6 +2,7 @@ package fr.bbougon.iris.web.ressources;
 
 import fr.bbougon.iris.domaine.Contact;
 import fr.bbougon.iris.entrepot.Entrepots;
+import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.JSONAdresse;
 import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.JSONContact;
 import fr.bbougon.iris.rules.AvecEntrepotsMemoire;
 import org.junit.Rule;
@@ -30,6 +31,13 @@ public class ContactRessourceTest {
     private JSONContact jsonContact() {
         JSONContact jsonContact = new JSONContact();
         jsonContact.nom = "Bertrand";
+        jsonContact.prénom ="Prénom";
+        JSONAdresse jsonAdresse = new JSONAdresse();
+        jsonAdresse.numéro = "10";
+        jsonAdresse.voie = "rue Marie-Laurencin";
+        jsonAdresse.codePostal = "75012";
+        jsonAdresse.ville = "Paris";
+        jsonContact.adresse = jsonAdresse;
         return jsonContact;
     }
 
@@ -42,6 +50,11 @@ public class ContactRessourceTest {
         Contact contact = Entrepots.contact().parId(identifiant);
         assertThat(contact.getIdentifiant().toString()).isEqualTo(identifiant);
         assertThat(contact.getNom()).isEqualTo("Bertrand");
+        assertThat(contact.getPrénom()).isEqualTo("Prénom");
+        assertThat(contact.getAdresse().getNuméro()).isEqualTo("10");
+        assertThat(contact.getAdresse().getVoie()).isEqualTo("rue Marie-Laurencin");
+        assertThat(contact.getAdresse().getCodePostal()).isEqualTo("75012");
+        assertThat(contact.getAdresse().getVille()).isEqualTo("Paris");
     }
 
 }
