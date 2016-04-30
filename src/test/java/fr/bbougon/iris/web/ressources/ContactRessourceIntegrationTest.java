@@ -1,5 +1,7 @@
 package fr.bbougon.iris.web.ressources;
 
+import com.jayway.jsonpath.JsonPath;
+import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.JSONContact;
 import fr.bbougon.iris.rules.AvecServeurEmbarqué;
 import fr.bbougon.iris.web.ressources.utilitaires.JSONContactTestBuilder;
 import org.junit.Before;
@@ -12,8 +14,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
 
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
-import static javax.ws.rs.core.Response.Status.CREATED;
+import static javax.ws.rs.core.Response.Status.*;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ContactRessourceIntegrationTest {
@@ -42,6 +43,43 @@ public class ContactRessourceIntegrationTest {
 
         assertThat(response.getStatus()).isEqualTo(BAD_REQUEST.getStatusCode());
         assertThat(response.readEntity(String.class)).isEqualTo("L'identifiant 'mauvais-UUID' doit être au format UUID.");
+    }
+
+    @Test
+    public void onPeutCréerUnContactSansAdresse() {
+        UUID identifiant = UUID.randomUUID();
+        Entity<String> entity = Entity.json(new JSONContactTestBuilder().avecNom("Luc").toJson());
+
+        Response response = client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().put(entity);
+
+        assertThat(response.getStatus()).isEqualTo(CREATED.getStatusCode());
+    }
+
+    @Test
+    public void onPeutRécupérerUnContactAvecSonIdentifiant() {
+        UUID identifiant = UUID.randomUUID();
+        JSONContactTestBuilder builder = new JSONContactTestBuilder().défaut();
+        JSONContact contactAttendu = builder.build();
+        client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().put(Entity.json(builder.toJson()));
+
+        Response response = client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().get();
+
+        assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
+        String contactRetourné = response.readEntity(String.class);
+        assertThat((String) (JsonPath.read(contactRetourné, "$.identifiant"))).isEqualTo(identifiant.toString());
+        assertThat((String) (JsonPath.read(contactRetourné, "$.nom"))).isEqualTo(contactAttendu.nom);
+        assertThat((String) (JsonPath.read(contactRetourné, "$.prénom"))).isEqualTo(contactAttendu.prénom);
+        assertThat((String) (JsonPath.read(contactRetourné, "$.adresse.numéro"))).isEqualTo(contactAttendu.adresse.numéro);
+        assertThat((String) (JsonPath.read(contactRetourné, "$.adresse.voie"))).isEqualTo(contactAttendu.adresse.voie);
+        assertThat((String) (JsonPath.read(contactRetourné, "$.adresse.codePostal"))).isEqualTo(contactAttendu.adresse.codePostal);
+        assertThat((String) (JsonPath.read(contactRetourné, "$.adresse.ville"))).isEqualTo(contactAttendu.adresse.ville);
+    }
+
+    @Test
+    public void notFoundAvecUnContactInconnu() {
+        Response response = client.target(serveur.getUrl()).path(ContactRessource.PATH).path(UUID.randomUUID().toString()).request().get();
+
+        assertThat(response.getStatus()).isEqualTo(NOT_FOUND.getStatusCode());
     }
 
     private Client client;
