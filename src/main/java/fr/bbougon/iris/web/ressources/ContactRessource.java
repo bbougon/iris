@@ -22,6 +22,11 @@ public class ContactRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response créeUnContact(@PathParam("identifiant") String identifiant, JSONContact jsonContact) {
         try {
+            Contact contactExistant = Entrepots.contact().parId(identifiant);
+            if(contactExistant != null) {
+                contactExistant.metÀJour(jsonContact.nom, jsonContact.prénom, créeUneAdresse(jsonContact));
+                return Response.ok().build();
+            }
             Contact contact = Contact.créer(identifiant, jsonContact.nom, jsonContact.prénom, créeUneAdresse(jsonContact));
             Entrepots.contact().persiste(contact);
             return Response.created(UriBuilder.fromResource(this.getClass()).path(identifiant).build()).entity("test").build();

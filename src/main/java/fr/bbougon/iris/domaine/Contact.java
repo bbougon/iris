@@ -1,11 +1,14 @@
 package fr.bbougon.iris.domaine;
 
+
+import java.util.Optional;
 import java.util.UUID;
 
 public class Contact {
 
     @SuppressWarnings("Pour MongoLink")
-    protected Contact() {}
+    protected Contact() {
+    }
 
     private Contact(String identifiant, String nom, String prénom) {
         this.identifiant = UUID.fromString(identifiant);
@@ -37,6 +40,40 @@ public class Contact {
 
     public Adresse getAdresse() {
         return adresse;
+    }
+
+    public void metÀJour(String nom, String prénom, Adresse adresse) {
+        this.nom = Optional.ofNullable(nom).filter(s -> !nom.equals("")).orElse(this.nom);
+        this.prénom = Optional.ofNullable(prénom).filter(s -> !prénom.equals("")).orElse(this.prénom);
+        this.adresse = Optional.ofNullable(metÀJour(adresse)).orElse(this.adresse);
+    }
+
+    private Adresse metÀJour(Adresse adresse) {
+        if (null != adresse) {
+            String numéro1 = adresse.getNuméro();
+            Optional<String> numéroOptionnel = getOptionalPour(numéro1);
+            Optional<String> voieOptionnelle = getOptionalPour(adresse.getVoie());
+            Optional<String> codePostalOptionnel = getOptionalPour(adresse.getCodePostal());
+            Optional<String> villeOptionnelle = getOptionalPour(adresse.getVille());
+            if(null != this.adresse) {
+                return créeUneAdresse(numéroOptionnel, voieOptionnelle, codePostalOptionnel, villeOptionnelle);
+
+            }
+            return Adresse.créer(numéroOptionnel.get(), voieOptionnelle.get(), codePostalOptionnel.get(), villeOptionnelle.get());
+        }
+        return null;
+    }
+
+    private Adresse créeUneAdresse(Optional<String> numéroOptionnel, Optional<String> voieOptionnelle, Optional<String> codePostalOptionnel, Optional<String> villeOptionnelle) {
+        String numéro = numéroOptionnel.orElse(this.adresse.getNuméro());
+        String voie = voieOptionnelle.orElse(this.adresse.getVoie());
+        String codePostal = codePostalOptionnel.orElse(this.adresse.getCodePostal());
+        String ville = villeOptionnelle.orElse(this.adresse.getVille());
+        return Adresse.créer(numéro, voie, codePostal, ville);
+    }
+
+    private Optional<String> getOptionalPour(String valeur) {
+        return Optional.of(valeur).filter(s -> !valeur.equals(""));
     }
 
     private UUID identifiant;
