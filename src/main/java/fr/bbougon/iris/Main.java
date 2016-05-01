@@ -10,9 +10,9 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        Configuration.configurationServeur().getPort();
+        int port = Configuration.configurationServeur().getPort();
         LOGGER.info("Serveur en cours de démarrage sur le port ");
-        new Serveur(new InetSocketAddress(8282)).démarre();
+        new Serveur(new InetSocketAddress(port)).démarre();
     }
 
     private static final Logger LOGGER = LogManager.getLogger(Main.class.getCanonicalName());
