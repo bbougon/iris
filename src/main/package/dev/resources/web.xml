@@ -20,8 +20,17 @@
         <listener-class>fr.bbougon.iris.entrepot.mongo.ContextListener</listener-class>
     </listener>
 
+    <filter>
+        <filter-name>CORS</filter-name>
+        <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+    </filter>
+
     <servlet-mapping>
         <servlet-name>fr.bbougon.iris.web.ressources.MonApplication</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+    <filter-mapping>
+        <filter-name>CORS</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>
