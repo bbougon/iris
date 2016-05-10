@@ -1,5 +1,6 @@
 package fr.bbougon.iris.web.ressources;
 
+import com.jayway.jsonpath.JsonPath;
 import fr.bbougon.iris.domaine.Contact;
 import fr.bbougon.iris.entrepot.Entrepots;
 import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.JSONAdresse;
@@ -73,6 +74,26 @@ public class ContactRessourceTest {
         assertThat(contact.getNom()).isEqualTo(contactAttendu.nom);
         assertThat(contact.getPrénom()).isEqualTo(contactAttendu.prénom);
         assertThat(contact.getAdresse().getNuméro()).isEqualTo(contactAttendu.adresse.numéro);
+    }
+
+    @Test
+    public void onPeutRécupérerTousLesContacts() {
+        String identifiant1 = UUID.randomUUID().toString();
+        Entrepots.contact().persiste(Contact.créer(identifiant1, "Bertrand", "Bougon", null));
+        Entrepots.contact().persiste(Contact.créer(UUID.randomUUID().toString(), "Alexis", "Bougon", null));
+        Entrepots.contact().persiste(Contact.créer(UUID.randomUUID().toString(), "Aline", "Bougon", null));
+
+        Response response = new ContactRessource().récupèreTousLesContacts();
+
+        String contacts = (String) response.getEntity();
+        assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
+        assertThat((String) JsonPath.read(contacts, "$[0].identifiant")).isEqualTo(identifiant1);
+        assertThat((String) JsonPath.read(contacts, "$[0].nom")).isEqualTo("Bertrand");
+        assertThat((String) JsonPath.read(contacts, "$[0].prénom")).isEqualTo("Bougon");
+        assertThat((String) JsonPath.read(contacts, "$[1].nom")).isEqualTo("Alexis");
+        assertThat((String) JsonPath.read(contacts, "$[1].prénom")).isEqualTo("Bougon");
+        assertThat((String) JsonPath.read(contacts, "$[2].nom")).isEqualTo("Aline");
+        assertThat((String) JsonPath.read(contacts, "$[2].prénom")).isEqualTo("Bougon");
     }
 
 }

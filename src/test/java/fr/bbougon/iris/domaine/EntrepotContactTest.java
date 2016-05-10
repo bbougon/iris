@@ -13,9 +13,6 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 public class EntrepotContactTest {
 
-    @Rule
-    public AvecEntrepotsMongo entrepots = new AvecEntrepotsMongo();
-
     @Before
     public void before() throws Exception {
         adresse = new AdresseTestBuilder()
@@ -67,7 +64,8 @@ public class EntrepotContactTest {
         assertThat(contacts.get(2).getNom()).isEqualTo("Bertrand");
         assertThat(contacts.get(3).getNom()).isEqualTo("Rafael");
     }
-
+    @Rule
+    public AvecEntrepotsMongo entrepots = new AvecEntrepotsMongo();
     private Contact contact;
     private Adresse adresse;
 }

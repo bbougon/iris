@@ -11,6 +11,7 @@ import org.junit.Test;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
 
@@ -65,14 +66,15 @@ public class ContactRessourceIntegrationTest {
         Response response = client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().get();
 
         assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
+        assertThat(response.getMediaType()).isEqualTo(MediaType.APPLICATION_JSON_TYPE);
         String contactRetourné = response.readEntity(String.class);
-        assertThat((String) (JsonPath.read(contactRetourné, "$.identifiant"))).isEqualTo(identifiant.toString());
-        assertThat((String) (JsonPath.read(contactRetourné, "$.nom"))).isEqualTo(contactAttendu.nom);
-        assertThat((String) (JsonPath.read(contactRetourné, "$.prénom"))).isEqualTo(contactAttendu.prénom);
-        assertThat((String) (JsonPath.read(contactRetourné, "$.adresse.numéro"))).isEqualTo(contactAttendu.adresse.numéro);
-        assertThat((String) (JsonPath.read(contactRetourné, "$.adresse.voie"))).isEqualTo(contactAttendu.adresse.voie);
-        assertThat((String) (JsonPath.read(contactRetourné, "$.adresse.codePostal"))).isEqualTo(contactAttendu.adresse.codePostal);
-        assertThat((String) (JsonPath.read(contactRetourné, "$.adresse.ville"))).isEqualTo(contactAttendu.adresse.ville);
+        assertThat((String) JsonPath.read(contactRetourné, "$.identifiant")).isEqualTo(identifiant.toString());
+        assertThat((String) JsonPath.read(contactRetourné, "$.nom")).isEqualTo(contactAttendu.nom);
+        assertThat((String) JsonPath.read(contactRetourné, "$.prénom")).isEqualTo(contactAttendu.prénom);
+        assertThat((String) JsonPath.read(contactRetourné, "$.adresse.numéro")).isEqualTo(contactAttendu.adresse.numéro);
+        assertThat((String) JsonPath.read(contactRetourné, "$.adresse.voie")).isEqualTo(contactAttendu.adresse.voie);
+        assertThat((String) JsonPath.read(contactRetourné, "$.adresse.codePostal")).isEqualTo(contactAttendu.adresse.codePostal);
+        assertThat((String) JsonPath.read(contactRetourné, "$.adresse.ville")).isEqualTo(contactAttendu.adresse.ville);
     }
 
     @Test
@@ -80,6 +82,23 @@ public class ContactRessourceIntegrationTest {
         Response response = client.target(serveur.getUrl()).path(ContactRessource.PATH).path(UUID.randomUUID().toString()).request().get();
 
         assertThat(response.getStatus()).isEqualTo(NOT_FOUND.getStatusCode());
+    }
+
+    @Test
+    public void retourneLaListeDesContacts() {
+        créeUnContact();
+
+        Response response = client.target(serveur.getUrl()).path(ContactRessource.PATH).request().get();
+
+        assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
+        assertThat(response.getMediaType()).isEqualTo(MediaType.APPLICATION_JSON_TYPE);
+        assertThat((String) JsonPath.read(response.readEntity(String.class), "$[0].identifiant")).isNotNull();
+    }
+
+    public void créeUnContact() {
+        UUID identifiant = UUID.randomUUID();
+        Entity<String> entity = Entity.json(new JSONContactTestBuilder().défaut().toJson());
+        client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().put(entity);
     }
 
     private Client client;

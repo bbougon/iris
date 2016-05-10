@@ -12,6 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
+import java.util.List;
+
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 @Path(ContactRessource.PATH)
@@ -51,6 +53,13 @@ public class ContactRessource {
     public Adresse créeUneAdresse(JSONContact jsonContact) {
         JSONAdresse jsonAdresse = jsonContact.adresse;
         return jsonAdresse == null ? null : Adresse.créer(jsonAdresse.numéro, jsonAdresse.voie, jsonAdresse.codePostal, jsonAdresse.ville);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response récupèreTousLesContacts() {
+        List<Contact> contacts = Entrepots.contact().tous();
+        return Response.ok(new Gson().toJson(contacts)).build();
     }
 
     public static final String PATH = "/contacts";
