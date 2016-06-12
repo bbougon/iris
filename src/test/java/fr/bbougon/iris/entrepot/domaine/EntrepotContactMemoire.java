@@ -17,4 +17,9 @@ public class EntrepotContactMemoire extends EntrepotMemoire<Contact> implements 
             return null;
         }
     }
+
+    @Override
+    public void supprime(Contact contact) {
+        tous().remove(contact);
+    }
 }

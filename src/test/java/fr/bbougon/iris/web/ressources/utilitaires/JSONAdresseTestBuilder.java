@@ -11,7 +11,7 @@ public class JSONAdresseTestBuilder {
 
     public JSONAdresse build() {
         JSONAdresse jsonAdresse = new JSONAdresse();
-        jsonAdresse.numéro = numéro;
+        jsonAdresse.numero = numéro;
         jsonAdresse.voie = voie;
         jsonAdresse.codePostal = codePostal;
         jsonAdresse.ville = ville;

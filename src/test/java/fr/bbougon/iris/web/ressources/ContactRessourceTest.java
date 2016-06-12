@@ -13,6 +13,8 @@ import org.junit.Test;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
 
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.fest.assertions.api.Assertions.assertThat;
 
@@ -34,9 +36,9 @@ public class ContactRessourceTest {
     private JSONContact jsonContact() {
         JSONContact jsonContact = new JSONContact();
         jsonContact.nom = "Bertrand";
-        jsonContact.prénom ="Prénom";
+        jsonContact.prenom ="Prénom";
         JSONAdresse jsonAdresse = new JSONAdresse();
-        jsonAdresse.numéro = "10";
+        jsonAdresse.numero = "10";
         jsonAdresse.voie = "rue Marie-Laurencin";
         jsonAdresse.codePostal = "75012";
         jsonAdresse.ville = "Paris";
@@ -53,8 +55,8 @@ public class ContactRessourceTest {
         Contact contact = Entrepots.contact().parId(identifiant);
         assertThat(contact.getIdentifiant().toString()).isEqualTo(identifiant);
         assertThat(contact.getNom()).isEqualTo("Bertrand");
-        assertThat(contact.getPrénom()).isEqualTo("Prénom");
-        assertThat(contact.getAdresse().getNuméro()).isEqualTo("10");
+        assertThat(contact.getPrenom()).isEqualTo("Prénom");
+        assertThat(contact.getAdresse().getNumero()).isEqualTo("10");
         assertThat(contact.getAdresse().getVoie()).isEqualTo("rue Marie-Laurencin");
         assertThat(contact.getAdresse().getCodePostal()).isEqualTo("75012");
         assertThat(contact.getAdresse().getVille()).isEqualTo("Paris");
@@ -72,8 +74,8 @@ public class ContactRessourceTest {
         assertThat(Entrepots.contact().tous()).hasSize(1);
         Contact contact = Entrepots.contact().parId(identifiant);
         assertThat(contact.getNom()).isEqualTo(contactAttendu.nom);
-        assertThat(contact.getPrénom()).isEqualTo(contactAttendu.prénom);
-        assertThat(contact.getAdresse().getNuméro()).isEqualTo(contactAttendu.adresse.numéro);
+        assertThat(contact.getPrenom()).isEqualTo(contactAttendu.prenom);
+        assertThat(contact.getAdresse().getNumero()).isEqualTo(contactAttendu.adresse.numero);
     }
 
     @Test
@@ -89,11 +91,29 @@ public class ContactRessourceTest {
         assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
         assertThat((String) JsonPath.read(contacts, "$[0].identifiant")).isEqualTo(identifiant1);
         assertThat((String) JsonPath.read(contacts, "$[0].nom")).isEqualTo("Bertrand");
-        assertThat((String) JsonPath.read(contacts, "$[0].prénom")).isEqualTo("Bougon");
+        assertThat((String) JsonPath.read(contacts, "$[0].prenom")).isEqualTo("Bougon");
         assertThat((String) JsonPath.read(contacts, "$[1].nom")).isEqualTo("Alexis");
-        assertThat((String) JsonPath.read(contacts, "$[1].prénom")).isEqualTo("Bougon");
+        assertThat((String) JsonPath.read(contacts, "$[1].prenom")).isEqualTo("Bougon");
         assertThat((String) JsonPath.read(contacts, "$[2].nom")).isEqualTo("Aline");
-        assertThat((String) JsonPath.read(contacts, "$[2].prénom")).isEqualTo("Bougon");
+        assertThat((String) JsonPath.read(contacts, "$[2].prenom")).isEqualTo("Bougon");
+    }
+
+    @Test
+    public void onPeutSupprimerUnContact() {
+        String identifiant = UUID.randomUUID().toString();
+        Entrepots.contact().persiste(Contact.créer(identifiant, "Bertrand", "Bougon", null));
+
+        Response response = new ContactRessource().supprimeLeContact(identifiant);
+
+        assertThat(response.getStatus()).isEqualTo(NO_CONTENT.getStatusCode());
+        assertThat(Entrepots.contact().tous()).isEmpty();
+    }
+
+    @Test
+    public void onNePeutSupprimerUnContactQuiNExistePas() {
+        Response response = new ContactRessource().supprimeLeContact(UUID.randomUUID().toString());
+
+        assertThat(response.getStatus()).isEqualTo(NOT_FOUND.getStatusCode());
     }
 
 }

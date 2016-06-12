@@ -6,15 +6,15 @@ public class Adresse {
 
     public static Adresse créer(String numéro, String voie, String codePostal, String ville) {
         Adresse adresse = new Adresse();
-        adresse.numéro = numéro;
+        adresse.numero = numéro;
         adresse.voie = voie;
         adresse.codePostal = codePostal;
         adresse.ville = ville;
         return adresse;
     }
 
-    public String getNuméro() {
-        return numéro;
+    public String getNumero() {
+        return numero;
     }
 
     public String getVoie() {
@@ -29,7 +29,7 @@ public class Adresse {
         return ville;
     }
 
-    private String numéro;
+    private String numero;
     private String voie;
     private String codePostal;
     private String ville;

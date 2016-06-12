@@ -6,7 +6,7 @@ import org.mongolink.domain.mapper.ComponentMap;
 public class AdresseMapping extends ComponentMap<Adresse> {
     @Override
     public void map() {
-        property().onProperty(element().getNuméro());
+        property().onProperty(element().getNumero());
         property().onProperty(element().getVoie());
         property().onProperty(element().getCodePostal());
         property().onProperty(element().getVille());

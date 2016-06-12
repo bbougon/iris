@@ -24,7 +24,7 @@ public class EntrepotContactTest {
         contact = new ContactTestBuilder()
                 .avecIdentifiant(UUID.randomUUID())
                 .avecUnNom("Un Nom")
-                .avecUnPrénom("Un prénom")
+                .avecUnPrénom("Un prenom")
                 .avecUneAdresse(adresse)
                 .build();
 
@@ -39,8 +39,8 @@ public class EntrepotContactTest {
 
         assertThat(contactRécupéré).isNotNull();
         assertThat(contactRécupéré.getNom()).isEqualTo("Un Nom");
-        assertThat(contactRécupéré.getPrénom()).isEqualTo("Un prénom");
-        assertThat(contactRécupéré.getAdresse().getNuméro()).isEqualTo("10");
+        assertThat(contactRécupéré.getPrenom()).isEqualTo("Un prenom");
+        assertThat(contactRécupéré.getAdresse().getNumero()).isEqualTo("10");
         assertThat(contactRécupéré.getAdresse().getVoie()).isEqualTo("Avenue Magenta");
         assertThat(contactRécupéré.getAdresse().getCodePostal()).isEqualTo("75010");
         assertThat(contactRécupéré.getAdresse().getVille()).isEqualTo("Paris");
@@ -64,6 +64,20 @@ public class EntrepotContactTest {
         assertThat(contacts.get(2).getNom()).isEqualTo("Bertrand");
         assertThat(contacts.get(3).getNom()).isEqualTo("Rafael");
     }
+
+    @Test
+    public void onPeutSupprimerUnContact() {
+        UUID identifiant = UUID.randomUUID();
+        Entrepots.contact().persiste(new ContactTestBuilder().avecUnNom("Bertrand").avecIdentifiant(identifiant).build());
+        entrepots.cleanSession();
+        Contact contact = Entrepots.contact().parId(identifiant.toString());
+
+        Entrepots.contact().supprime(contact);
+        entrepots.cleanSession();
+
+        assertThat(Entrepots.contact().tous()).isEmpty();
+    }
+
     @Rule
     public AvecEntrepotsMongo entrepots = new AvecEntrepotsMongo();
     private Contact contact;

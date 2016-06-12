@@ -15,7 +15,7 @@ public class ContactTest {
         contact.metÀJour("", "", Adresse.créer("9", "rue Pourmann APPT 1143", "33300", "Bordeaux"));
 
         assertThat(contact.getNom()).isEqualTo("Bougon");
-        assertThat(contact.getPrénom()).isEqualTo("Bertrand");
+        assertThat(contact.getPrenom()).isEqualTo("Bertrand");
         assertThat(contact.getAdresse().getVoie()).isEqualTo("rue Pourmann APPT 1143");
     }
 
@@ -25,7 +25,7 @@ public class ContactTest {
 
         contact.metÀJour("Bougon", "Bertrand", null);
 
-        assertThat(contact.getAdresse().getNuméro()).isEqualTo("9");
+        assertThat(contact.getAdresse().getNumero()).isEqualTo("9");
         assertThat(contact.getAdresse().getVoie()).isEqualTo("rue Pourmann");
         assertThat(contact.getAdresse().getCodePostal()).isEqualTo("33300");
         assertThat(contact.getAdresse().getVille()).isEqualTo("Bordeaux");
@@ -37,7 +37,7 @@ public class ContactTest {
 
         contact.metÀJour("Bougon", "Bertrand", Adresse.créer("", "", "33300", "Bacalan"));
 
-        assertThat(contact.getAdresse().getNuméro()).isEqualTo("9");
+        assertThat(contact.getAdresse().getNumero()).isEqualTo("9");
         assertThat(contact.getAdresse().getVoie()).isEqualTo("rue Pourmann");
         assertThat(contact.getAdresse().getCodePostal()).isEqualTo("33300");
         assertThat(contact.getAdresse().getVille()).isEqualTo("Bacalan");
@@ -58,7 +58,7 @@ public class ContactTest {
 
         contact.metÀJour("Bougon", "Bertrand", Adresse.créer("9", "rue Pourmann", "33300", "Bordeaux"));
 
-        assertThat(contact.getAdresse().getNuméro()).isEqualTo("9");
+        assertThat(contact.getAdresse().getNumero()).isEqualTo("9");
         assertThat(contact.getAdresse().getVoie()).isEqualTo("rue Pourmann");
         assertThat(contact.getAdresse().getCodePostal()).isEqualTo("33300");
         assertThat(contact.getAdresse().getVille()).isEqualTo("Bordeaux");

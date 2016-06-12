@@ -11,7 +11,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-
 import java.util.List;
 
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
@@ -26,10 +25,10 @@ public class ContactRessource {
         try {
             Contact contactExistant = Entrepots.contact().parId(identifiant);
             if(contactExistant != null) {
-                contactExistant.metÀJour(jsonContact.nom, jsonContact.prénom, créeUneAdresse(jsonContact));
+                contactExistant.metÀJour(jsonContact.nom, jsonContact.prenom, créeUneAdresse(jsonContact));
                 return Response.ok().build();
             }
-            Contact contact = Contact.créer(identifiant, jsonContact.nom, jsonContact.prénom, créeUneAdresse(jsonContact));
+            Contact contact = Contact.créer(identifiant, jsonContact.nom, jsonContact.prenom, créeUneAdresse(jsonContact));
             Entrepots.contact().persiste(contact);
             return Response.created(UriBuilder.fromResource(this.getClass()).path(identifiant).build()).entity("test").build();
         } catch (IllegalArgumentException e) {
@@ -52,7 +51,7 @@ public class ContactRessource {
 
     public Adresse créeUneAdresse(JSONContact jsonContact) {
         JSONAdresse jsonAdresse = jsonContact.adresse;
-        return jsonAdresse == null ? null : Adresse.créer(jsonAdresse.numéro, jsonAdresse.voie, jsonAdresse.codePostal, jsonAdresse.ville);
+        return jsonAdresse == null ? null : Adresse.créer(jsonAdresse.numero, jsonAdresse.voie, jsonAdresse.codePostal, jsonAdresse.ville);
     }
 
     @GET
@@ -60,6 +59,17 @@ public class ContactRessource {
     public Response récupèreTousLesContacts() {
         List<Contact> contacts = Entrepots.contact().tous();
         return Response.ok(new Gson().toJson(contacts)).build();
+    }
+
+    @DELETE
+    @Path("/{identifiant}")
+    public Response supprimeLeContact(@PathParam("identifiant") String identifiant) {
+        Contact contact = Entrepots.contact().parId(identifiant);
+        if(null == contact) {
+            return Response.status(NOT_FOUND).build();
+        }
+        Entrepots.contact().supprime(contact);
+        return Response.noContent().build();
     }
 
     public static final String PATH = "/contacts";

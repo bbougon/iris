@@ -10,10 +10,10 @@ public class Contact {
     protected Contact() {
     }
 
-    private Contact(String identifiant, String nom, String prénom) {
+    private Contact(String identifiant, String nom, String prenom) {
         this.identifiant = UUID.fromString(identifiant);
         this.nom = nom;
-        this.prénom = prénom;
+        this.prenom = prenom;
     }
 
     public static Contact créer(String identifiant, String nom, String prénom, Adresse adresse) {
@@ -34,8 +34,8 @@ public class Contact {
         return nom;
     }
 
-    public String getPrénom() {
-        return prénom;
+    public String getPrenom() {
+        return prenom;
     }
 
     public Adresse getAdresse() {
@@ -44,13 +44,13 @@ public class Contact {
 
     public void metÀJour(String nom, String prénom, Adresse adresse) {
         this.nom = Optional.ofNullable(nom).filter(s -> !nom.equals("")).orElse(this.nom);
-        this.prénom = Optional.ofNullable(prénom).filter(s -> !prénom.equals("")).orElse(this.prénom);
+        this.prenom = Optional.ofNullable(prénom).filter(s -> !prénom.equals("")).orElse(this.prenom);
         this.adresse = Optional.ofNullable(metÀJour(adresse)).orElse(this.adresse);
     }
 
     private Adresse metÀJour(Adresse adresse) {
         if (null != adresse) {
-            String numéro1 = adresse.getNuméro();
+            String numéro1 = adresse.getNumero();
             Optional<String> numéroOptionnel = getOptionalPour(numéro1);
             Optional<String> voieOptionnelle = getOptionalPour(adresse.getVoie());
             Optional<String> codePostalOptionnel = getOptionalPour(adresse.getCodePostal());
@@ -65,7 +65,7 @@ public class Contact {
     }
 
     private Adresse créeUneAdresse(Optional<String> numéroOptionnel, Optional<String> voieOptionnelle, Optional<String> codePostalOptionnel, Optional<String> villeOptionnelle) {
-        String numéro = numéroOptionnel.orElse(this.adresse.getNuméro());
+        String numéro = numéroOptionnel.orElse(this.adresse.getNumero());
         String voie = voieOptionnelle.orElse(this.adresse.getVoie());
         String codePostal = codePostalOptionnel.orElse(this.adresse.getCodePostal());
         String ville = villeOptionnelle.orElse(this.adresse.getVille());
@@ -78,6 +78,6 @@ public class Contact {
 
     private UUID identifiant;
     private String nom;
-    private String prénom;
+    private String prenom;
     private Adresse adresse;
 }

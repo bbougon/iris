@@ -30,7 +30,7 @@ public class ContactTestBuilder {
 
     private UUID identifiant;
     private String nom;
-    private String prénom = "prénom";
+    private String prénom = "prenom";
     private Adresse adresse = new AdresseTestBuilder().build();
 
 }

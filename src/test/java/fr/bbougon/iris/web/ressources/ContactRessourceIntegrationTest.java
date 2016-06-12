@@ -59,9 +59,7 @@ public class ContactRessourceIntegrationTest {
     @Test
     public void onPeutRécupérerUnContactAvecSonIdentifiant() {
         UUID identifiant = UUID.randomUUID();
-        JSONContactTestBuilder builder = new JSONContactTestBuilder().défaut();
-        JSONContact contactAttendu = builder.build();
-        client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().put(Entity.json(builder.toJson()));
+        JSONContact contactAttendu = créeUnContact(identifiant);
 
         Response response = client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().get();
 
@@ -70,8 +68,8 @@ public class ContactRessourceIntegrationTest {
         String contactRetourné = response.readEntity(String.class);
         assertThat((String) JsonPath.read(contactRetourné, "$.identifiant")).isEqualTo(identifiant.toString());
         assertThat((String) JsonPath.read(contactRetourné, "$.nom")).isEqualTo(contactAttendu.nom);
-        assertThat((String) JsonPath.read(contactRetourné, "$.prénom")).isEqualTo(contactAttendu.prénom);
-        assertThat((String) JsonPath.read(contactRetourné, "$.adresse.numéro")).isEqualTo(contactAttendu.adresse.numéro);
+        assertThat((String) JsonPath.read(contactRetourné, "$.prenom")).isEqualTo(contactAttendu.prenom);
+        assertThat((String) JsonPath.read(contactRetourné, "$.adresse.numero")).isEqualTo(contactAttendu.adresse.numero);
         assertThat((String) JsonPath.read(contactRetourné, "$.adresse.voie")).isEqualTo(contactAttendu.adresse.voie);
         assertThat((String) JsonPath.read(contactRetourné, "$.adresse.codePostal")).isEqualTo(contactAttendu.adresse.codePostal);
         assertThat((String) JsonPath.read(contactRetourné, "$.adresse.ville")).isEqualTo(contactAttendu.adresse.ville);
@@ -95,10 +93,24 @@ public class ContactRessourceIntegrationTest {
         assertThat((String) JsonPath.read(response.readEntity(String.class), "$[0].identifiant")).isNotNull();
     }
 
-    public void créeUnContact() {
+    @Test
+    public void peutSupprimerUnContact() {
         UUID identifiant = UUID.randomUUID();
-        Entity<String> entity = Entity.json(new JSONContactTestBuilder().défaut().toJson());
-        client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().put(entity);
+        créeUnContact(identifiant);
+
+        Response response = client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().delete();
+
+        assertThat(response.getStatus()).isEqualTo(NO_CONTENT.getStatusCode());
+    }
+
+    public JSONContact créeUnContact() {
+        return créeUnContact(UUID.randomUUID());
+    }
+
+    private JSONContact créeUnContact(UUID identifiant) {
+        JSONContactTestBuilder contactTestBuilder = new JSONContactTestBuilder().défaut();
+        client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().put(Entity.json(contactTestBuilder.toJson()));
+        return contactTestBuilder.build();
     }
 
     private Client client;

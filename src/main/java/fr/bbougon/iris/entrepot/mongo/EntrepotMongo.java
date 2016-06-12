@@ -22,6 +22,11 @@ public class EntrepotMongo<T> implements Entrepot<T> {
         return session.get(UUID.fromString(identifiant), persistentType());
     }
 
+    @Override
+    public void supprime(T contact) {
+        session.delete(contact);
+    }
+
     public List<T> tous() {
         return session.getAll(persistentType());
     }

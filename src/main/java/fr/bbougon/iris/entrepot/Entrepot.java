@@ -9,4 +9,6 @@ public interface Entrepot<T> {
     void persiste(T entity);
 
     T parId(String identifiant);
+
+    void supprime(T contact);
 }

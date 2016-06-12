@@ -11,16 +11,11 @@ public class JSONContactTestBuilder {
         return this;
     }
 
-    public JSONContactTestBuilder avecAdresse(JSONAdresse jsonAdresse) {
-        this.jsonAdresse = jsonAdresse;
-        return this;
-    }
-
     public JSONContactTestBuilder défaut() {
         avecNom("Défaut");
-        prénom = "Prénom";
+        prenom = "Prénom";
         jsonAdresse = new JSONAdresse();
-        jsonAdresse.numéro = "24";
+        jsonAdresse.numero = "24";
         jsonAdresse.voie = "Route du médoc";
         jsonAdresse.codePostal = "33000";
         jsonAdresse.ville = "Bordeaux";
@@ -34,7 +29,7 @@ public class JSONContactTestBuilder {
     public JSONContact build() {
         JSONContact jsonContact = new JSONContact();
         jsonContact.nom = nom;
-        jsonContact.prénom = prénom;
+        jsonContact.prenom = prenom;
         if(jsonAdresse != null) {
             jsonContact.adresse = jsonAdresse;
         }
@@ -42,6 +37,6 @@ public class JSONContactTestBuilder {
     }
 
     private String nom;
-    private String prénom;
+    private String prenom;
     private JSONAdresse jsonAdresse;
 }

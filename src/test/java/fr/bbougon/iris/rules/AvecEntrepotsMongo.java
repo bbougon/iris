@@ -16,6 +16,7 @@ public class AvecEntrepotsMongo extends ExternalResource {
 
     @Override
     protected void after() {
+        super.after();
         mongolinkRule.after();
     }
 
