@@ -6,8 +6,6 @@ import fr.bbougon.iris.entrepot.Entrepot;
 import fr.bbougon.iris.entrepot.Entrepots;
 import org.mongolink.MongoSession;
 
-import static fr.bbougon.iris.entrepot.mongo.MongoConfiguration.session;
-
 public class EntrepotsMongos extends Entrepots {
     public EntrepotsMongos(MongoSession session) {
         this.session = session;

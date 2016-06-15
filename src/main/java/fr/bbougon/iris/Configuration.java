@@ -8,9 +8,6 @@ import java.util.ResourceBundle;
 
 public class Configuration {
 
-    private static final String CONFIGURATION = "configuration";
-    private static final ResourceBundle configuration = ResourceBundle.getBundle(CONFIGURATION, Locale.FRANCE);
-
     public static Settings configurationMongo() {
         ConfigurationMongo configuration = new ConfigurationMongo(Configuration.configuration);
         return new PropriétésMongo(configuration.dataBase, configuration.port, configuration.host, configuration.user, configuration.password).ajouteLesPropriétés(Settings.defaultInstance());
@@ -19,12 +16,14 @@ public class Configuration {
     public static ConfigurationServeur configurationServeur() {
         return new ConfigurationServeur(Configuration.configuration);
     }
+    private static final String CONFIGURATION = "configuration";
+    private static final ResourceBundle configuration = ResourceBundle.getBundle(CONFIGURATION, Locale.FRANCE);
 
     private static class ConfigurationMongo {
         public ConfigurationMongo(ResourceBundle configuration) {
             dataBase = configuration.getString("mongo.database");
             port = configuration.getString("mongo.port");
-            host =  configuration.getString("mongo.host");
+            host = configuration.getString("mongo.host");
             user = configuration.getString("mongo.user");
             password = configuration.getString("mongo.password");
         }

@@ -31,6 +31,8 @@ public class ContactRessourceTest {
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
         assertThat(response.getHeaderString("Location")).isEqualTo(ContactRessource.PATH + "/" + identifiant);
+        String contact = (String) response.getEntity();
+        assertThat((String) JsonPath.read(contact, "$.identifiant")).isEqualTo(identifiant);
     }
 
     private JSONContact jsonContact() {

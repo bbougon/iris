@@ -4,6 +4,7 @@ import com.jayway.jsonpath.JsonPath;
 import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.JSONContact;
 import fr.bbougon.iris.rules.AvecServeurEmbarqué;
 import fr.bbougon.iris.web.ressources.utilitaires.JSONContactTestBuilder;
+import net.minidev.json.JSONArray;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -90,7 +91,10 @@ public class ContactRessourceIntegrationTest {
 
         assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
         assertThat(response.getMediaType()).isEqualTo(MediaType.APPLICATION_JSON_TYPE);
-        assertThat((String) JsonPath.read(response.readEntity(String.class), "$[0].identifiant")).isNotNull();
+        String entity = response.readEntity(String.class);
+        assertThat((JSONArray) JsonPath.read(entity, "$")).hasSize(1);
+        assertThat((String) JsonPath.read(entity, "$[0].identifiant")).isNotNull();
+        assertThat((String) JsonPath.read(entity, "$[0].nom")).isEqualTo("Défaut");
     }
 
     @Test

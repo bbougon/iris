@@ -17,7 +17,7 @@ public class IrisExceptionMapper implements ExceptionMapper<Exception> {
     public Response toResponse(final Exception exception) {
         int status = BAD_REQUEST.getStatusCode();
         Object entity = exception.getMessage();
-        if(exception instanceof WebApplicationException) {
+        if (exception instanceof WebApplicationException) {
             status = ((WebApplicationException) exception).getResponse().getStatus();
             entity = ((WebApplicationException) exception).getResponse().getEntity();
         }

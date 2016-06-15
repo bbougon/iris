@@ -23,8 +23,8 @@ public class EntrepotMongo<T> implements Entrepot<T> {
     }
 
     @Override
-    public void supprime(T contact) {
-        session.delete(contact);
+    public void supprime(T entity) {
+        session.delete(entity);
     }
 
     public List<T> tous() {

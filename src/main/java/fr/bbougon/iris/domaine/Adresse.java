@@ -2,7 +2,8 @@ package fr.bbougon.iris.domaine;
 
 public class Adresse {
 
-    protected Adresse() {}
+    protected Adresse() {
+    }
 
     public static Adresse créer(String numéro, String voie, String codePostal, String ville) {
         Adresse adresse = new Adresse();

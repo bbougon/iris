@@ -22,10 +22,6 @@ public class Contact {
         return contact;
     }
 
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
-    }
-
     public UUID getIdentifiant() {
         return identifiant;
     }
@@ -42,6 +38,10 @@ public class Contact {
         return adresse;
     }
 
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
+
     public void metÀJour(String nom, String prénom, Adresse adresse) {
         this.nom = Optional.ofNullable(nom).filter(s -> !nom.equals("")).orElse(this.nom);
         this.prenom = Optional.ofNullable(prénom).filter(s -> !prénom.equals("")).orElse(this.prenom);
@@ -55,7 +55,7 @@ public class Contact {
             Optional<String> voieOptionnelle = getOptionalPour(adresse.getVoie());
             Optional<String> codePostalOptionnel = getOptionalPour(adresse.getCodePostal());
             Optional<String> villeOptionnelle = getOptionalPour(adresse.getVille());
-            if(null != this.adresse) {
+            if (null != this.adresse) {
                 return créeUneAdresse(numéroOptionnel, voieOptionnelle, codePostalOptionnel, villeOptionnelle);
 
             }

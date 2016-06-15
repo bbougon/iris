@@ -7,24 +7,30 @@ import org.mongolink.domain.mapper.ContextBuilder;
 
 public class MongoConfiguration {
 
-    public static void stopSession() {
+    public static MongoSession createSession() {
+        session = IrisSession.INSTANCE.mongoSessionManager.createSession();
+        return session;
+    }
+
+    public static void stop() {
+        IrisSession.INSTANCE.mongoSessionManager.close();
+    }
+
+    public static void flushAndStopSession() {
+        session.flush();
         session.stop();
-        sessionManager.close();
     }
 
-    public static MongoSession startSession() {
-        try {
+    private static MongoSession session;
+
+    private enum IrisSession {
+        INSTANCE;
+
+        IrisSession() {
             ContextBuilder builder = new ContextBuilder("fr.bbougon.iris.entrepot.mongo.mapping");
-            sessionManager = MongoSessionManager.create(builder, Configuration.configurationMongo());
-            session = sessionManager.createSession();
-            session.start();
-            return session;
-        } catch (Exception e) {
-            e.printStackTrace();
+            mongoSessionManager = MongoSessionManager.create(builder, Configuration.configurationMongo());
         }
-        return null;
-    }
 
-    static MongoSessionManager sessionManager;
-    static MongoSession session;
+        public MongoSessionManager mongoSessionManager;
+    }
 }

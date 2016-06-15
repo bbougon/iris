@@ -9,15 +9,8 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class IrisMapperProvider implements ContextResolver<ObjectMapper> {
 
-    final ObjectMapper defaultObjectMapper;
-
     public IrisMapperProvider() {
         defaultObjectMapper = createIrisMapper();
-    }
-
-    @Override
-    public ObjectMapper getContext(Class<?> type) {
-        return defaultObjectMapper;
     }
 
     private static ObjectMapper createIrisMapper() {
@@ -25,5 +18,11 @@ public class IrisMapperProvider implements ContextResolver<ObjectMapper> {
         result.configure(SerializationFeature.INDENT_OUTPUT, true);
         return result;
     }
+
+    @Override
+    public ObjectMapper getContext(Class<?> type) {
+        return defaultObjectMapper;
+    }
+    final ObjectMapper defaultObjectMapper;
 
 }
