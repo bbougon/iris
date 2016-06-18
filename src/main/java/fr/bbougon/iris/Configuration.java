@@ -16,6 +16,7 @@ public class Configuration {
     public static ConfigurationServeur configurationServeur() {
         return new ConfigurationServeur(Configuration.configuration);
     }
+
     private static final String CONFIGURATION = "configuration";
     private static final ResourceBundle configuration = ResourceBundle.getBundle(CONFIGURATION, Locale.FRANCE);
 

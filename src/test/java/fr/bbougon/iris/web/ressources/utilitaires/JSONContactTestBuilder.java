@@ -30,7 +30,7 @@ public class JSONContactTestBuilder {
         JSONContact jsonContact = new JSONContact();
         jsonContact.nom = nom;
         jsonContact.prenom = prenom;
-        if(jsonAdresse != null) {
+        if (jsonAdresse != null) {
             jsonContact.adresse = jsonAdresse;
         }
         return jsonContact;

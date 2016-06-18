@@ -7,8 +7,6 @@ import java.util.List;
 
 public abstract class EntrepotMemoire<T> implements Entrepot<T> {
 
-    List<T> liste = Lists.newArrayList();
-
     @Override
     public void persiste(T entity) {
         liste.add(entity);
@@ -18,4 +16,5 @@ public abstract class EntrepotMemoire<T> implements Entrepot<T> {
     public List<T> tous() {
         return liste;
     }
+    List<T> liste = Lists.newArrayList();
 }

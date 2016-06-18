@@ -18,9 +18,6 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ContactRessourceTest {
 
-    @Rule
-    public AvecEntrepotsMemoire entrepotsMemoire = new AvecEntrepotsMemoire();
-
     @Test
     public void onPeutCréerUnContactEnFournissantSonNomEtSonIdentifiant() {
         String identifiant = UUID.randomUUID().toString();
@@ -36,7 +33,7 @@ public class ContactRessourceTest {
     private JSONContact jsonContact() {
         JSONContact jsonContact = new JSONContact();
         jsonContact.nom = "Bertrand";
-        jsonContact.prenom ="Prénom";
+        jsonContact.prenom = "Prénom";
         JSONAdresse jsonAdresse = new JSONAdresse();
         jsonAdresse.numero = "10";
         jsonAdresse.voie = "rue Marie-Laurencin";
@@ -117,5 +114,7 @@ public class ContactRessourceTest {
 
         assertThat(response.getStatus()).isEqualTo(NOT_FOUND.getStatusCode());
     }
+    @Rule
+    public AvecEntrepotsMemoire entrepotsMemoire = new AvecEntrepotsMemoire();
 
 }

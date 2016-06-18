@@ -23,6 +23,7 @@ public class IrisMapperProvider implements ContextResolver<ObjectMapper> {
     public ObjectMapper getContext(Class<?> type) {
         return defaultObjectMapper;
     }
+
     final ObjectMapper defaultObjectMapper;
 
 }

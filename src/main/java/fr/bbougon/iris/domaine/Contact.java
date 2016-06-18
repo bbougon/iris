@@ -25,18 +25,6 @@ public class Contact {
         return contact;
     }
 
-    private void setEmail(String email) {
-        try {
-            Optional<String> optionalEmail = Optional.ofNullable(email).filter(s -> !email.equals(""));
-            if (optionalEmail.isPresent()) {
-                new InternetAddress(optionalEmail.get(), true);
-                this.email = optionalEmail.get();
-            }
-        } catch (AddressException e) {
-            throw new EmailInvalideException(email);
-        }
-    }
-
     public UUID getIdentifiant() {
         return identifiant;
     }
@@ -95,6 +83,17 @@ public class Contact {
         return email;
     }
 
+    private void setEmail(String email) {
+        try {
+            Optional<String> optionalEmail = Optional.ofNullable(email).filter(s -> !email.equals(""));
+            if (optionalEmail.isPresent()) {
+                new InternetAddress(optionalEmail.get(), true);
+                this.email = optionalEmail.get();
+            }
+        } catch (AddressException e) {
+            throw new EmailInvalideException(email);
+        }
+    }
     private UUID identifiant;
     private String nom;
     private String prenom;

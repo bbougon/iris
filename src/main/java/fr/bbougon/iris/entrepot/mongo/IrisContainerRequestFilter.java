@@ -12,8 +12,6 @@ import java.io.IOException;
 
 @PreMatching
 public class IrisContainerRequestFilter implements ContainerRequestFilter {
-    private static final Logger LOGGER = LogManager.getLogger(IrisContainerRequestFilter.class.getCanonicalName());
-
     @Override
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {
         LOGGER.info("Request received");
@@ -22,4 +20,5 @@ public class IrisContainerRequestFilter implements ContainerRequestFilter {
         Entrepots.initialise(new EntrepotsMongos(session));
         LOGGER.info("Session started");
     }
+    private static final Logger LOGGER = LogManager.getLogger(IrisContainerRequestFilter.class.getCanonicalName());
 }

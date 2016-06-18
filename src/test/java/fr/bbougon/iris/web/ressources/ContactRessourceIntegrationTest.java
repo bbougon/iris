@@ -21,9 +21,6 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ContactRessourceIntegrationTest {
 
-    @Rule
-    public AvecServeurEmbarqué serveur = new AvecServeurEmbarqué();
-
     @Before
     public void before() {
         client = ClientBuilder.newClient();
@@ -116,6 +113,7 @@ public class ContactRessourceIntegrationTest {
         client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().put(Entity.json(contactTestBuilder.toJson()));
         return contactTestBuilder.build();
     }
-
+    @Rule
+    public AvecServeurEmbarqué serveur = new AvecServeurEmbarqué();
     private Client client;
 }

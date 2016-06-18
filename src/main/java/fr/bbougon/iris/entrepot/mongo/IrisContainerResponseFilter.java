@@ -9,12 +9,11 @@ import javax.ws.rs.container.ContainerResponseFilter;
 import java.io.IOException;
 
 public class IrisContainerResponseFilter implements ContainerResponseFilter {
-    private static final Logger LOGGER = LogManager.getLogger(IrisContainerResponseFilter.class.getCanonicalName());
-
     @Override
     public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext containerResponseContext) throws IOException {
         LOGGER.info("Response sent");
         MongoConfiguration.flushAndStopSession();
         LOGGER.info("Session stopped");
     }
+    private static final Logger LOGGER = LogManager.getLogger(IrisContainerResponseFilter.class.getCanonicalName());
 }

@@ -75,9 +75,6 @@ public class ContactRessource {
         Entrepots.contact().supprime(contact);
         return Response.noContent().build();
     }
-
-
-    private static final Logger LOGGER = LogManager.getLogger(IrisContainerRequestFilter.class.getCanonicalName());
-
     public static final String PATH = "/contacts";
+    private static final Logger LOGGER = LogManager.getLogger(IrisContainerRequestFilter.class.getCanonicalName());
 }
