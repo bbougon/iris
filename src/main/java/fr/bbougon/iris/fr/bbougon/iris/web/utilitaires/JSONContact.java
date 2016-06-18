@@ -7,4 +7,5 @@ public class JSONContact {
     public String nom;
     public String prenom;
     public JSONAdresse adresse;
+    public String email;
 }

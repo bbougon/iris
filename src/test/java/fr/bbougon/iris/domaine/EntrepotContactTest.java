@@ -26,6 +26,7 @@ public class EntrepotContactTest {
                 .avecUnNom("Un Nom")
                 .avecUnPrénom("Un prenom")
                 .avecUneAdresse(adresse)
+                .avecUnEmail("mail@mail.com")
                 .build();
 
     }
@@ -44,6 +45,7 @@ public class EntrepotContactTest {
         assertThat(contactRécupéré.getAdresse().getVoie()).isEqualTo("Avenue Magenta");
         assertThat(contactRécupéré.getAdresse().getCodePostal()).isEqualTo("75010");
         assertThat(contactRécupéré.getAdresse().getVille()).isEqualTo("Paris");
+        assertThat(contactRécupéré.getEmail().toString()).isEqualTo("mail@mail.com");
     }
 
     @Test

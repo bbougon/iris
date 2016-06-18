@@ -1,5 +1,6 @@
 package fr.bbougon.iris.entrepot.mongo.mapping;
 
+import com.google.gson.Gson;
 import fr.bbougon.iris.domaine.Contact;
 import org.mongolink.domain.mapper.AggregateMap;
 
@@ -11,5 +12,6 @@ public class ContactMapping extends AggregateMap<Contact> {
         property().onProperty(element().getNom());
         property().onProperty(element().getPrenom());
         property().onProperty(element().getAdresse());
+        property().onProperty(new Gson().toJson(element().getEmail()));
     }
 }

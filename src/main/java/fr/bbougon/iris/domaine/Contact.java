@@ -1,6 +1,8 @@
 package fr.bbougon.iris.domaine;
 
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,10 +18,23 @@ public class Contact {
         this.prenom = prenom;
     }
 
-    public static Contact créer(String identifiant, String nom, String prénom, Adresse adresse) {
+    public static Contact créer(String identifiant, String nom, String prénom, String email, Adresse adresse) {
         Contact contact = new Contact(identifiant, nom, prénom);
         contact.setAdresse(adresse);
+        contact.setEmail(email);
         return contact;
+    }
+
+    private void setEmail(String email) {
+        try {
+            Optional<String> optionalEmail = Optional.ofNullable(email).filter(s -> !email.equals(""));
+            if (optionalEmail.isPresent()) {
+                new InternetAddress(optionalEmail.get(), true);
+                this.email = optionalEmail.get();
+            }
+        } catch (AddressException e) {
+            throw new EmailInvalideException(email);
+        }
     }
 
     public UUID getIdentifiant() {
@@ -42,16 +57,16 @@ public class Contact {
         this.adresse = adresse;
     }
 
-    public void metÀJour(String nom, String prénom, Adresse adresse) {
+    public void metÀJour(String nom, String prénom, String email, Adresse adresse) {
         this.nom = Optional.ofNullable(nom).filter(s -> !nom.equals("")).orElse(this.nom);
         this.prenom = Optional.ofNullable(prénom).filter(s -> !prénom.equals("")).orElse(this.prenom);
         this.adresse = Optional.ofNullable(metÀJour(adresse)).orElse(this.adresse);
+        setEmail(email);
     }
 
     private Adresse metÀJour(Adresse adresse) {
         if (null != adresse) {
-            String numéro1 = adresse.getNumero();
-            Optional<String> numéroOptionnel = getOptionalPour(numéro1);
+            Optional<String> numéroOptionnel = getOptionalPour(adresse.getNumero());
             Optional<String> voieOptionnelle = getOptionalPour(adresse.getVoie());
             Optional<String> codePostalOptionnel = getOptionalPour(adresse.getCodePostal());
             Optional<String> villeOptionnelle = getOptionalPour(adresse.getVille());
@@ -76,8 +91,13 @@ public class Contact {
         return Optional.of(valeur).filter(s -> !valeur.equals(""));
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     private UUID identifiant;
     private String nom;
     private String prenom;
     private Adresse adresse;
+    private String email;
 }

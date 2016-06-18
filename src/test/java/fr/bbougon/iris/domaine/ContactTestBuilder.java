@@ -15,7 +15,7 @@ public class ContactTestBuilder {
     }
 
     public Contact build() {
-        return Contact.créer(identifiant.toString(), nom, prénom, adresse);
+        return Contact.créer(identifiant.toString(), nom, prénom, email, adresse);
     }
 
     public ContactTestBuilder avecUnPrénom(String prénom) {
@@ -28,9 +28,14 @@ public class ContactTestBuilder {
         return this;
     }
 
+    public ContactTestBuilder avecUnEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
     private UUID identifiant;
     private String nom;
     private String prénom = "prenom";
+    private String email;
     private Adresse adresse = new AdresseTestBuilder().build();
-
 }

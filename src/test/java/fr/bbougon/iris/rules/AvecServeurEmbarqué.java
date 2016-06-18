@@ -37,8 +37,8 @@ public class AvecServeurEmbarqué extends ExternalResource {
         for (Contact contact : contacts) {
             Entrepots.contact().supprime(contact);
             session.flush();
-            session.stop();
         }
+        session.stop();
     }
 
     public String getUrl() {

@@ -28,10 +28,10 @@ public class ContactRessource {
         try {
             Contact contactExistant = Entrepots.contact().parId(identifiant);
             if (contactExistant != null) {
-                contactExistant.metÀJour(jsonContact.nom, jsonContact.prenom, créeUneAdresse(jsonContact));
+                contactExistant.metÀJour(jsonContact.nom, jsonContact.prenom, null, créeUneAdresse(jsonContact));
                 return Response.ok().build();
             }
-            Contact contact = Contact.créer(identifiant, jsonContact.nom, jsonContact.prenom, créeUneAdresse(jsonContact));
+            Contact contact = Contact.créer(identifiant, jsonContact.nom, jsonContact.prenom, jsonContact.email, créeUneAdresse(jsonContact));
             Entrepots.contact().persiste(contact);
             return Response.created(UriBuilder.fromResource(this.getClass()).path(identifiant).build()).entity(new Gson().toJson(contact)).build();
         } catch (IllegalArgumentException e) {
