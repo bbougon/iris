@@ -75,6 +75,7 @@ public class ContactRessourceTest {
         assertThat(contact.getNom()).isEqualTo(contactAttendu.nom);
         assertThat(contact.getPrenom()).isEqualTo(contactAttendu.prenom);
         assertThat(contact.getAdresse().getNumero()).isEqualTo(contactAttendu.adresse.numero);
+        assertThat(contact.getEmail()).isEqualTo(contactAttendu.email);
     }
 
     @Test

@@ -28,7 +28,7 @@ public class ContactRessource {
         try {
             Contact contactExistant = Entrepots.contact().parId(identifiant);
             if (contactExistant != null) {
-                contactExistant.metÀJour(jsonContact.nom, jsonContact.prenom, null, créeUneAdresse(jsonContact));
+                contactExistant.metÀJour(jsonContact.nom, jsonContact.prenom, jsonContact.email, créeUneAdresse(jsonContact));
                 return Response.ok().build();
             }
             Contact contact = Contact.créer(identifiant, jsonContact.nom, jsonContact.prenom, jsonContact.email, créeUneAdresse(jsonContact));

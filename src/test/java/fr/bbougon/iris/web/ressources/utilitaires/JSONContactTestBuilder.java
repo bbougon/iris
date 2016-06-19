@@ -14,6 +14,7 @@ public class JSONContactTestBuilder {
     public JSONContactTestBuilder défaut() {
         avecNom("Défaut");
         prenom = "Prénom";
+        email = "mail@mail.com";
         jsonAdresse = new JSONAdresse();
         jsonAdresse.numero = "24";
         jsonAdresse.voie = "Route du médoc";
@@ -30,6 +31,7 @@ public class JSONContactTestBuilder {
         JSONContact jsonContact = new JSONContact();
         jsonContact.nom = nom;
         jsonContact.prenom = prenom;
+        jsonContact.email = email;
         if (jsonAdresse != null) {
             jsonContact.adresse = jsonAdresse;
         }
@@ -38,5 +40,6 @@ public class JSONContactTestBuilder {
 
     private String nom;
     private String prenom;
+    private String email;
     private JSONAdresse jsonAdresse;
 }
