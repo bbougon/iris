@@ -15,7 +15,14 @@ public class ContactTestBuilder {
     }
 
     public Contact build() {
-        return Contact.créer(identifiant.toString(), nom, prénom, email, adresse);
+        Contact contact = Contact.créer(identifiant.toString(), nom, prénom);
+        if (null != adresse) {
+            contact.setAdresse(adresse);
+        }
+        if (null != email) {
+            contact.metÀJour(nom, prénom, email, adresse);
+        }
+        return contact;
     }
 
     public ContactTestBuilder avecUnPrénom(String prénom) {

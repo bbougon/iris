@@ -16,5 +16,6 @@ public abstract class EntrepotMemoire<T> implements Entrepot<T> {
     public List<T> tous() {
         return liste;
     }
+
     List<T> liste = Lists.newArrayList();
 }

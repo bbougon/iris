@@ -18,10 +18,8 @@ public class Contact {
         this.prenom = prenom;
     }
 
-    public static Contact créer(String identifiant, String nom, String prénom, String email, Adresse adresse) {
+    public static Contact créer(String identifiant, String nom, String prénom) {
         Contact contact = new Contact(identifiant, nom, prénom);
-        contact.setAdresse(adresse);
-        contact.setEmail(email);
         return contact;
     }
 
@@ -94,6 +92,7 @@ public class Contact {
             throw new EmailInvalideException(email);
         }
     }
+
     private UUID identifiant;
     private String nom;
     private String prenom;

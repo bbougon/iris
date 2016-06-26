@@ -20,5 +20,6 @@ public class IrisContainerRequestFilter implements ContainerRequestFilter {
         Entrepots.initialise(new EntrepotsMongos(session));
         LOGGER.info("Session started");
     }
+
     private static final Logger LOGGER = LogManager.getLogger(IrisContainerRequestFilter.class.getCanonicalName());
 }

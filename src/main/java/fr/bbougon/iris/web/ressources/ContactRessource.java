@@ -31,7 +31,7 @@ public class ContactRessource {
                 contactExistant.metÀJour(jsonContact.nom, jsonContact.prenom, jsonContact.email, créeUneAdresse(jsonContact));
                 return Response.ok().build();
             }
-            Contact contact = Contact.créer(identifiant, jsonContact.nom, jsonContact.prenom, jsonContact.email, créeUneAdresse(jsonContact));
+            Contact contact = Contact.créer(identifiant, jsonContact.nom, jsonContact.prenom);
             Entrepots.contact().persiste(contact);
             return Response.created(UriBuilder.fromResource(this.getClass()).path(identifiant).build()).entity(new Gson().toJson(contact)).build();
         } catch (IllegalArgumentException e) {
@@ -75,6 +75,7 @@ public class ContactRessource {
         Entrepots.contact().supprime(contact);
         return Response.noContent().build();
     }
+
     public static final String PATH = "/contacts";
     private static final Logger LOGGER = LogManager.getLogger(IrisContainerRequestFilter.class.getCanonicalName());
 }

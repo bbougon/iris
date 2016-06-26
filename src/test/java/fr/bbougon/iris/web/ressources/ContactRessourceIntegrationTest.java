@@ -67,10 +67,6 @@ public class ContactRessourceIntegrationTest {
         assertThat((String) JsonPath.read(contactRetourné, "$.identifiant")).isEqualTo(identifiant.toString());
         assertThat((String) JsonPath.read(contactRetourné, "$.nom")).isEqualTo(contactAttendu.nom);
         assertThat((String) JsonPath.read(contactRetourné, "$.prenom")).isEqualTo(contactAttendu.prenom);
-        assertThat((String) JsonPath.read(contactRetourné, "$.adresse.numero")).isEqualTo(contactAttendu.adresse.numero);
-        assertThat((String) JsonPath.read(contactRetourné, "$.adresse.voie")).isEqualTo(contactAttendu.adresse.voie);
-        assertThat((String) JsonPath.read(contactRetourné, "$.adresse.codePostal")).isEqualTo(contactAttendu.adresse.codePostal);
-        assertThat((String) JsonPath.read(contactRetourné, "$.adresse.ville")).isEqualTo(contactAttendu.adresse.ville);
     }
 
     @Test
@@ -113,6 +109,7 @@ public class ContactRessourceIntegrationTest {
         client.target(serveur.getUrl()).path(ContactRessource.PATH).path(identifiant.toString()).request().put(Entity.json(contactTestBuilder.toJson()));
         return contactTestBuilder.build();
     }
+
     @Rule
     public AvecServeurEmbarqué serveur = new AvecServeurEmbarqué();
     private Client client;

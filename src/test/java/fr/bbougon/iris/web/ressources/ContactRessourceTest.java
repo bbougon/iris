@@ -54,17 +54,12 @@ public class ContactRessourceTest {
         assertThat(contact.getIdentifiant().toString()).isEqualTo(identifiant);
         assertThat(contact.getNom()).isEqualTo("Bertrand");
         assertThat(contact.getPrenom()).isEqualTo("Prénom");
-        assertThat(contact.getAdresse().getNumero()).isEqualTo("10");
-        assertThat(contact.getAdresse().getVoie()).isEqualTo("rue Marie-Laurencin");
-        assertThat(contact.getAdresse().getCodePostal()).isEqualTo("75012");
-        assertThat(contact.getAdresse().getVille()).isEqualTo("Paris");
-        assertThat(contact.getEmail()).isEqualTo("mail@mail.com");
     }
 
     @Test
     public void onPeutMettreÀJourUnContact() {
         String identifiant = UUID.randomUUID().toString();
-        Entrepots.contact().persiste(Contact.créer(identifiant, "Bertrand", "Bougon", null, null));
+        Entrepots.contact().persiste(Contact.créer(identifiant, "Bertrand", "Bougon"));
 
         JSONContact contactAttendu = new JSONContactTestBuilder().défaut().build();
         Response response = new ContactRessource().créeUnContact(identifiant, contactAttendu);
@@ -79,11 +74,16 @@ public class ContactRessourceTest {
     }
 
     @Test
+    public void onPeutAjouterUnNuméroDeTéléphoneÀUnContact() {
+
+    }
+
+    @Test
     public void onPeutRécupérerTousLesContacts() {
         String identifiant1 = UUID.randomUUID().toString();
-        Entrepots.contact().persiste(Contact.créer(identifiant1, "Bertrand", "Bougon", null, null));
-        Entrepots.contact().persiste(Contact.créer(UUID.randomUUID().toString(), "Alexis", "Bougon", null, null));
-        Entrepots.contact().persiste(Contact.créer(UUID.randomUUID().toString(), "Aline", "Bougon", null, null));
+        Entrepots.contact().persiste(Contact.créer(identifiant1, "Bertrand", "Bougon"));
+        Entrepots.contact().persiste(Contact.créer(UUID.randomUUID().toString(), "Alexis", "Bougon"));
+        Entrepots.contact().persiste(Contact.créer(UUID.randomUUID().toString(), "Aline", "Bougon"));
 
         Response response = new ContactRessource().récupèreTousLesContacts();
 
@@ -101,7 +101,7 @@ public class ContactRessourceTest {
     @Test
     public void onPeutSupprimerUnContact() {
         String identifiant = UUID.randomUUID().toString();
-        Entrepots.contact().persiste(Contact.créer(identifiant, "Bertrand", "Bougon", null, null));
+        Entrepots.contact().persiste(Contact.créer(identifiant, "Bertrand", "Bougon"));
 
         Response response = new ContactRessource().supprimeLeContact(identifiant);
 
@@ -115,6 +115,7 @@ public class ContactRessourceTest {
 
         assertThat(response.getStatus()).isEqualTo(NOT_FOUND.getStatusCode());
     }
+
     @Rule
     public AvecEntrepotsMemoire entrepotsMemoire = new AvecEntrepotsMemoire();
 

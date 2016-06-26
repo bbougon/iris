@@ -15,5 +15,6 @@ public class IrisContainerResponseFilter implements ContainerResponseFilter {
         MongoConfiguration.flushAndStopSession();
         LOGGER.info("Session stopped");
     }
+
     private static final Logger LOGGER = LogManager.getLogger(IrisContainerResponseFilter.class.getCanonicalName());
 }
