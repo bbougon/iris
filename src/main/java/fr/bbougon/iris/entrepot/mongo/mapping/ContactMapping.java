@@ -13,5 +13,6 @@ public class ContactMapping extends AggregateMap<Contact> {
         property().onProperty(element().getPrenom());
         property().onProperty(element().getAdresse());
         property().onProperty(new Gson().toJson(element().getEmail()));
+        collection().onProperty(element().getTelephones());
     }
 }

@@ -3,8 +3,8 @@ package fr.bbougon.iris.web.ressources;
 import com.google.gson.Gson;
 import fr.bbougon.iris.domaine.Adresse;
 import fr.bbougon.iris.domaine.Contact;
+import fr.bbougon.iris.domaine.Telephone;
 import fr.bbougon.iris.entrepot.Entrepots;
-import fr.bbougon.iris.entrepot.mongo.IrisContainerRequestFilter;
 import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.JSONAdresse;
 import fr.bbougon.iris.fr.bbougon.iris.web.utilitaires.JSONContact;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
@@ -26,9 +27,10 @@ public class ContactRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response créeUnContact(@PathParam("identifiant") String identifiant, JSONContact jsonContact) {
         try {
+            LOGGER.debug("Contact received", jsonContact.toString());
             Contact contactExistant = Entrepots.contact().parId(identifiant);
             if (contactExistant != null) {
-                contactExistant.metÀJour(jsonContact.nom, jsonContact.prenom, jsonContact.email, créeUneAdresse(jsonContact));
+                contactExistant.metÀJour(jsonContact.nom, jsonContact.prenom, jsonContact.email, créeUneAdresse(jsonContact), créeLeOuLesTéléphones(jsonContact));
                 return Response.ok().build();
             }
             Contact contact = Contact.créer(identifiant, jsonContact.nom, jsonContact.prenom);
@@ -51,8 +53,17 @@ public class ContactRessource {
         return Response.ok(new Gson().toJson(contact)).build();
     }
 
+    private List<Telephone> créeLeOuLesTéléphones(JSONContact jsonContact) {
+        LOGGER.debug(jsonContact.toString());
+        if (null == jsonContact.telephones) {
+            return null;
+        }
+        List<Telephone> telephones = jsonContact.telephones.stream().map(telephone -> Telephone.créer(telephone.numero, telephone.type)).collect(Collectors.toList());
+        return telephones;
+    }
 
-    public Adresse créeUneAdresse(JSONContact jsonContact) {
+
+    private Adresse créeUneAdresse(JSONContact jsonContact) {
         JSONAdresse jsonAdresse = jsonContact.adresse;
         return jsonAdresse == null ? null : Adresse.créer(jsonAdresse.numero, jsonAdresse.voie, jsonAdresse.codePostal, jsonAdresse.ville);
     }
@@ -77,5 +88,5 @@ public class ContactRessource {
     }
 
     public static final String PATH = "/contacts";
-    private static final Logger LOGGER = LogManager.getLogger(IrisContainerRequestFilter.class.getCanonicalName());
+    private static final Logger LOGGER = LogManager.getLogger(ContactRessource.class.getCanonicalName());
 }

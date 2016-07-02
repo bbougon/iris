@@ -8,4 +8,14 @@ public class JSONAdresse {
     public String voie;
     public String codePostal;
     public String ville;
+
+    @Override
+    public String toString() {
+        return "JSONAdresse{" +
+                "numero='" + numero + '\'' +
+                ", voie='" + voie + '\'' +
+                ", codePostal='" + codePostal + '\'' +
+                ", ville='" + ville + '\'' +
+                '}';
+    }
 }

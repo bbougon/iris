@@ -21,11 +21,16 @@ public class EntrepotContactTest {
                 .withCodePostal("75010")
                 .withVille("Paris")
                 .build();
+        Telephone telephone = new TéléphoneTestBuilder()
+                .avecNuméro("0666666666")
+                .avecType(TypeTelephone.PERSONNEL)
+                .build();
         contact = new ContactTestBuilder()
                 .avecIdentifiant(UUID.randomUUID())
                 .avecUnNom("Un Nom")
                 .avecUnPrénom("Un prenom")
                 .avecUneAdresse(adresse)
+                .avecUnTéléphone(telephone)
                 .avecUnEmail("mail@mail.com")
                 .build();
 
@@ -46,6 +51,8 @@ public class EntrepotContactTest {
         assertThat(contactRécupéré.getAdresse().getCodePostal()).isEqualTo("75010");
         assertThat(contactRécupéré.getAdresse().getVille()).isEqualTo("Paris");
         assertThat(contactRécupéré.getEmail().toString()).isEqualTo("mail@mail.com");
+        assertThat(contactRécupéré.getTelephones().get(0).getNumero()).isEqualTo("0666666666");
+        assertThat(contactRécupéré.getTelephones().get(0).getType()).isEqualTo(TypeTelephone.PERSONNEL);
     }
 
     @Test

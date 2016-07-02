@@ -4,6 +4,7 @@ import fr.bbougon.iris.domaine.Adresse;
 import org.mongolink.domain.mapper.ComponentMap;
 
 public class AdresseMapping extends ComponentMap<Adresse> {
+
     @Override
     public void map() {
         property().onProperty(element().getNumero());
