@@ -75,7 +75,7 @@ public class Contact {
         setEmail(email);
     }
 
-    public List<Telephone> filtreLesTéléphones(List<Telephone> telephones) {
+    private List<Telephone> filtreLesTéléphones(List<Telephone> telephones) {
         if(null != telephones) {
             this.telephones.removeAll(telephones);
             return telephones.stream().filter(telephone -> téléphoneNonPrésent(telephone)).collect(Collectors.toList());
@@ -83,7 +83,7 @@ public class Contact {
         return null;
     }
 
-    public boolean téléphoneNonPrésent(Telephone telephone) {
+    private boolean téléphoneNonPrésent(Telephone telephone) {
         return null != telephone && null != telephone.getNumero() && null != telephone.getType();
     }
 

@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Telephone {
 
+    @SuppressWarnings("Pour MongoLink")
     Telephone() {
     }
 
